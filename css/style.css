@@ -1,12 +1,13 @@
  @import url('https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+ @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap');
+
 
 *{
   margin: 0;
   padding: 0;
   list-style: none;
   text-decoration: none;
-  font-family: 'Noticia Text', serif;
 }
 
 body{
@@ -20,14 +21,63 @@ body{
 header{
   display: flex;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+header a{
+  color: #CED0D3;
+}
+
+#top-logo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 17px;
+  font-family: 'Noticia Text', serif;
+  padding-top: 5px;
 }
 
 #logo1{
-  width: 10%;
+  width: 20%;
+  height: 55%;
 }
 
+nav{
+  display: flex;
+  width: 100%;
+  background-color: #031128;
+}
 
+nav ul li a:hover{
+  border-bottom: 1px solid #CED0D3;
+  padding-bottom: 5px;
+  color: goldenrod;
+  transition: .5s;
+}
 
+#nav__links{
+  display: flex;
+  width: 100%;
+  background-color: black;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#deco{
+  background: none;
+  border: 1px solid #CED0D3;
+  color: #CED0D3;
+  padding: 3.5px;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+#deco:hover{
+  color: goldenrod;
+  border: 2px solid goldenrod;
+  transition: 1s;
+}
 
 
 /*** FOOTER ***/
@@ -40,6 +90,7 @@ footer{
   background-repeat: no-repeat;
   justify-content: space-evenly;
   color: #CED0D3;
+  font-family: 'Noticia Text', serif;
 }
 
 footer a{
@@ -193,16 +244,31 @@ footer a:hover{
 }
 
 
-
        
 /***RESPONSIVE HEADER + FOOTER***/
 @media (max-width: 780px) {
+  nav{
+    flex-direction: column;
+  }
+
+  #nav__links{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+
+  #top-logo{
+    padding-bottom: 10px;
+  }
+
+  #deco{
+    font-size: 11px;
+  }
+
   footer{
     flex-direction: column;
     padding-bottom: 2.5%;
   }
-
-  
  
 }
 
