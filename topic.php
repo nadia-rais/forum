@@ -24,11 +24,11 @@ session_start();
       $db = mysqli_connect("localhost","root","","forum");
       $request="SELECT * FROM topic as T INNER JOIN utilisateurs as U ON T.id_utilisateur=U.id ORDER BY T.id desc";
       $query=mysqli_query($db,$request);
-      var_dump($query);
 
       echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>Vos Commentaires</th></thead><tbody>";
 
       while($value=mysqli_fetch_assoc($query)){
+        var_dump($value);
 
           echo "<tr><td id='left-livre'><p>".$value['id'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a></td>";
           echo "<td id='right-livre'><a href='conversation.php'>".$value['topic']."</a></td></tr>";
