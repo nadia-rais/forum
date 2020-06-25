@@ -115,10 +115,10 @@ if ($result)
 ?>
         <h1>Connexion</h1><br>
         <label for="login">Login</label><br>
-        <input id="form-text" type="text" name="login">
+        <input id="form-text" type="text" name="login" maxlength="10">
 
         <label for="password">Mot de passe</label><br>
-        <input id="form-text" type="password" name="password"><br><br>
+        <input id="form-text" type="password" name="password" maxlength="12" minlength="6"><br><br>
 
         <input id="button-valider" type="submit" value="Se connecter" name="submit">
     </form>

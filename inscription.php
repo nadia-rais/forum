@@ -23,7 +23,6 @@ session_start();
 if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
 
     echo "
-
 <nav>
 <ul>
     <li><a href='index.php'>Accueil</a></li>
@@ -32,12 +31,10 @@ if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
     <li><a href='logout.php'>Déconnexion</a></li>
 </ul>
 </nav>
-
  ";}
  elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
     
     echo "
-
     <nav>
     <ul>
         <li><a href='index.php'>Accueil</a></li>
@@ -47,11 +44,9 @@ if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
         <li><a href='logout.php'>Déconnexion</a></li>
     </ul>
     </nav>
-
      ";}
 else{
     echo "
-
 <nav>
 <ul>
     <li><a href='index.php'>Accueil</a></li>
@@ -59,7 +54,6 @@ else{
     <li><a href='connexion.php'>Connexion</a></li>
 </ul>
 </nav>
-
  ";} ?>
     
             </section>
@@ -135,16 +129,16 @@ mysqli_close($con);
 <h1>Inscription</h1><br>
 
 <label for="login">Votre email<span>*</span> :</label><br>
-<input id="form-text" type="email" name="email">
+<input id="form-text" type="email" name="email"  maxlength="15" minlength="6">
 
 <label for="login">Votre Login<span>*</span> :</label><br>
-<input id="form-text" type="text" name="login">
+<input id="form-text" type="text" name="login"  maxlength="10">
     
 <label for="password">Votre mot de passe<span>*</span> :</label><br>
-<input id="form-text" type="password" name="password">
+<input id="form-text" type="password" name="password" maxlength="12" minlength="6">
 
 <label for="conpassword">Confirmer votre mot de passe<span>*</span> :</label><br>
-<input id="form-text" type="password" name="conpassword">
+<input id="form-text" type="password" name="conpassword" maxlength="12" minlength="6">
 
 <br><br>
 
