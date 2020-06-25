@@ -18,49 +18,49 @@ session_start();
     <header>
             <section>
 
-                <?php
+            <?php
 
-                if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
+if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
+
+    echo "
+
+<nav>
+<ul>
+    <li><a href='index.php'>Accueil</a></li>
+    <li><a href='message.php'>Chat</a></li>
+    <li><a href='profil.php'>Profil</a></li>
+    <li><a href='logout.php'>Déconnexion</a></li>
+</ul>
+</nav>
+
+ ";}
+ elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
     
-                    echo "
+    echo "
 
-                <nav>
-                <ul>
-                    <li><a href='index.php'>Accueil</a></li>
-                    <li><a href='planning.php'>Planning</a></li>
-                    <li><a href='profil.php'>Profil</a></li>
-                    <li><a href='logout.php'>Déconnexion</a></li>
-                </ul>
-                </nav>
+    <nav>
+    <ul>
+        <li><a href='index.php'>Accueil</a></li>
+        <li><a href='message.php'>Chat</a></li>
+        <li><a href='profil.php'>Profil</a></li>
+        <li><a href='admin.php'>Admin</a></li>
+        <li><a href='logout.php'>Déconnexion</a></li>
+    </ul>
+    </nav>
 
-                 ";}
-                 elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
-                    
-                    echo "
+     ";}
+else{
+    echo "
 
-                    <nav>
-                    <ul>
-                        <li><a href='index.php'>Accueil</a></li>
-                        <li><a href='planning.php'>Planning</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href='admin.php'>Admin</a></li>
-                        <li><a href='logout.php'>Déconnexion</a></li>
-                    </ul>
-                    </nav>
-    
-                     ";}
-                else{
-                    echo "
+<nav>
+<ul>
+    <li><a href='index.php'>Accueil</a></li>
+    <li><a href='inscription.php'>Inscription</a></li>
+    <li><a href='connexion.php'>Connexion</a></li>
+</ul>
+</nav>
 
-                <nav>
-                <ul>
-                    <li><a href='index.php'>Accueil</a></li>
-                    <li><a href='inscription.php'>Inscription</a></li>
-                    <li><a href='connexion.php'>Connexion</a></li>
-                </ul>
-                </nav>
-
-                 ";} ?>
+ ";} ?>
     
             </section>
         </header>
