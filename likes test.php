@@ -30,13 +30,6 @@ foreach($message as $key => $value){
         $query4 = mysqli_query($connect, $requestcountdislikes);
         $countdislikes = mysqli_fetch_all($query4);
 
-        
-        //on met les bouton like et dislike dans la boucle pour qu'ils se répètent à chaque message
-        echo'<form action="messages.php" method="GET"> 
-                <input type="submit" name="like" id="likebutton" value="' . $idcomment . '"/> <p>' .$countlikes[0][0].' &nbsp; people like this</p>
-                <input type="submit" name="dislike" id="dislikebutton" value="' . $idcomment . '"/><p>'.$countdislikes[0][0]. '" &nbsp; people dislike this </p>
-            </form> ';
-
 
         //on compte toutes les entrées likes effectuées par l'utilisateur pour un message
         $requestcountlikesbyid = "SELECT COUNT(*) FROM likes WHERE id_message = $idmessage  AND id_utilisateur = $iduser AND reaction = 1 ";
@@ -47,6 +40,28 @@ foreach($message as $key => $value){
         $requestcountbyid = "SELECT COUNT(*) FROM likes WHERE id_message = $idmessage  AND id_utilisateur = $iduser AND reaction = -1 ";
         $query6 = mysqli_query($connect, $requestcountbyid);
         $countdislikesbyid = mysqli_fetch_all($query6);
+
+        
+        //on met les bouton like et dislike dans la boucle pour qu'ils se répètent à chaque message
+        // j'ai un pb de condition pour pas que les users cliquent indéfiniment en gros le bouton disparaît si un like ou dislike a été fait
+        if ($countlikesbyid[0][0] == 0){
+
+            echo '<form action="livre-or.php" method="GET">
+                 <input type="submit" name="like" id="likebutton" value="' . $idcomment . '"/>
+                 </form> ';
+          }
+
+          if ($countdislikesbyid[0][0] == 0){
+
+            echo '<form action="livre-or.php" method="GET">
+            <input type="submit" name="dislike" id="dislikebutton" value="' . $idcomment . '"/>
+            </form> ';
+
+          }
+          echo '<p>' .$countlikes[0][0].' &nbsp; people like this</p>';
+          echo '<p>' .$countdislikes[0][0].' &nbsp; people dislike this</p>';
+
+
 
 }
 
@@ -78,7 +93,7 @@ foreach($message as $key => $value){
 
         }
 
-        //condition à corriger pour pas qu'un utilisateur clique indéfiniment
+        //condition à corriger peut être si on veut garder les boutons et enlever les if au dessus qui les font apparaître ou non pour pas qu'un utilisateur clique indéfiniment
 
     
 
