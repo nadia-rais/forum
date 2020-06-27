@@ -4,21 +4,35 @@
       <li><a href="index.php">homepage</a></li>
       <li><a href="categorie.php">categories</a></li>
       <li><a href="topic.php">topics</a></li>
-      <li><a href="profil.php">profil</a></li>
-      <li><a href="admin.php">espace admin</a></li>
-
       <?php 
-        if (isset($_SESSION["login"])):
-      ?>    
+        $connect = mysqli_connect('localhost','root','','forum');
+
+        if (isset($_SESSION["login"])){
+          if($_SESSION["login"] == "admin"){
+      ?>
+         <li><a href="admin.php">espace admin</a></li>
+         <li><a href="moderation.php">espace moderation</a></li> 
+
+      <?php
+           }
+           else{
+            ?>
+          <li><a href="profil.php">profil</a></li>
+      <?php
+           }
+      ?> 
       <li><form action="index.php" method="post">
-            <input id="deco" name="deco" value="DECONNEXION" type="submit"/>
+            <input class="deco" name="deco" value="DECONNEXION" type="submit"/>
           </form>
       </li>
+
       <?php
-        else :
+        }else{
       ?>
+      <li><a href="connexion.php">profil</a></li>
+      <li><a href="connexion.php">espace admin</a></li>
       <li><a href="connexion.php">se connecter</a></li>
-      <?php endif;?>
+      <?php }?>
     </ul>
   </section> 
 
@@ -51,10 +65,33 @@
     </p>
     <section id="newsletter">
       <h3>inscris-toi à notre newsletter</h3>
-      <form action="">
-        <input type="text" id="news" name="email" placeholder="Enter your email"></br>
-        <input type="submit" id="btnnews" value="envoyer">
+      <form action="" method="POST">
+        <input type="text" id="news" name="emailnews" placeholder="Enter your email"></br>
+        <input type="submit" name="submitnews" id="btnnews" value="envoyer">
       </form>
+
+      <?php
+      
+      if(isset($_POST['submitnews'])){
+        $email = $_POST['emailnews'];
+      
+        $request1 = "SELECT email FROM newsletter" ;
+        $req = mysqli_query($connect,$request1);
+        $exist = mysqli_fetch_all($req);
+
+        if (empty($email)){
+          echo '<p class="newsmessage" >veuillez remplir tous les champs</p>';
+        }
+
+        else {
+          $request = "INSERT INTO newsletter (email) VALUES ('$email')";
+          $query = mysqli_query($connect, $request);
+          header("location:index.php");
+
+          echo '<p class="newsmessage">votre email a bien été enregistré</p>';
+        }
+      }
+      ?>
     </section>
   </section> 
 </footer>

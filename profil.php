@@ -1,5 +1,6 @@
 <?php
 session_start();
+$connect = mysqli_connect('localhost','root','','forum');
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,137 @@ session_start();
        <?php include("includes/header.php"); ?>
     </header>
     <main>
+    <section id="profile-content">
+
+<section id="modification">
+  <h1>complète ton profil ou modifie tes infos de connexion</h1>
+  <form id="formpic" method="POST">
+    <label> adresse url de l'image </label>
+    <input type="text" id="avatar" name="linkimg" accept="image/png, image/jpeg">
+    <input type="submit" name="submit1" value="Upload">
+  </form>
+
+  <form id="formfiles" action="upload.php" method="post" enctype="multipart/form-data">
+    <label for="fileUpload">ou sélectionner votre fichier:</label>
+    <div id="inputfiles">
+    <input type="file" name="photo" id="fileUpload">
+    <input type="submit" name="submit" value="Upload">
+    </div>
+    <p><strong>Note:</strong> Seuls les formats .jpg, .jpeg, .jpeg, .gif, .png sont autorisés jusqu'à une taille maximale de 5 Mo.</p>
+  </form>
+
+  <form id="formmodif"method="POST" action="profil.php">
+    <div class="modif">
+      <label for="login">nouveau pseudo</label><br>
+      <input id="login-profil" type="text" value="nouveau pseudo" name="pseudo">
+      <input id="button-modif" type="submit" name="submit2" value="modifier pseudo">
+    </div>
+    <div class="modif">
+      <label for="login">nouveau login</label><br>
+      <input id="login-profil" type="text" value="nouveau login" name="login">
+      <input id="button-modif" type="submit" name="submit3" value="modifier login">
+    </div>
+    <div class="modif">
+      <label class="labpass" for="password">nouveau password</label><br>
+      <input id="login-password" type="password" value="nouveau password" name="password">
+      <label class="labpass" for="passwordrepeat">confirmation password</label>
+      <input type="password" name="passwordrepeat">
+      <input id="button-modif" type="submit" name="submit4" value="modifier password">
+    </div>
+  </form> 
+</section>
+
+
+<?php
+if (isset($_SESSION["login"])){
+
+  $request = "SELECT login, pseudo, avatar, statut, DATE_FORMAT (date, '%d/%m/%Y') FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+  $query = mysqli_query($connect, $request);
+  $infos = mysqli_fetch_all($query);
+
+  // peut-être rajouter une requete pour le statut de l'utilisateur ex s'il a posté 20 messages il a un statut débutant si c'est 100 apprenti, 500 etc 
+
+  /*$request3 = "SELECT COUNT(*) FROM message WHERE id_utilisateur = ... ";
+  $query3 = mysqli_query($connect, $request3);
+  $countmessages = mysqli_fetch_all($query3, MYSQLI_ASSOC);*/
+}
+
+ if(isset ($_POST['submit1'])){
+
+  $link = $_POST['linkimg'];
+  
+  $request2 = "UPDATE `utilisateurs` SET `avatar`='$link' WHERE login = '$_SESSION[login]'";
+  $result2 = mysqli_query($connect, $request2);
+
+  header("location:profil.php");
+}
+
+ //update pseudo
+ if(isset($_POST['submit2']) && (!empty($_POST['pseudo']))){
+
+  $pseudo = ($_POST['pseudo']);
+
+  $request3 = "UPDATE `utilisateurs` SET `pseudo`='$pseudo' WHERE login = '$_SESSION[login]'";
+  $result3 = mysqli_query($connect, $request3);
+
+  header("location:connexion.php");
+}
+
+
+//update login
+if(isset($_POST['submit3']) && (!empty($_POST['login']))){
+
+  $login = ($_POST['login']);
+
+  $request4 = "UPDATE `utilisateurs` SET `login`='$login' WHERE login = '$_SESSION[login]'";
+  $result4 = mysqli_query($connect, $request4);
+
+  header("location:connexion.php");
+}
+
+//update password
+if(isset($_POST['submit4'])){
+
+  $password = ($_POST['password']);
+  $password_repeat = ($_POST['passwordrepeat']);
+
+    if ($password == $password_repeat) {
+
+      $request5 = "UPDATE `utilisateurs` SET `password`='$password' WHERE login = '$_SESSION[login]'";
+      $result5 = mysqli_query($connect, $request5);
+
+    header('location:connexion.php'); }
+
+    else echo '<p class="error-connect">Les mots de passe doivent être identiques</p>';
+    
+}
+
+?>
+ <div class="profile-card">
+  <div class="top-section">
+    <i class="notif fas fa-bell"></i>
+    <div class="pic">
+      <img src="<?=$infos[0][2]?>" alt="profilpic" width="100">
+    </div>
+    <div class="name"><?=$_SESSION['login']?></div>
+    <div class="tag"><p>@<?=$infos[0][1]?></p></div>
+  </div>
+  <div class="bottom-section">
+    <div class="social-media">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+      <a href="#"><i class="fab fa-twitch"></i></a>
+    </div>
+    <div>190<span>messages postés</span></div>
+    <div class="border"></div>
+    <div class="views">GOLD<span>niveau</span></div>      
+    <div class="border"></div>
+    <p id="date">inscrit depuis le <?=$infos[0][4]?></p>
+  </div>
+</div>
+</section>  
+</main>
     </main>
     <footer>
       <?php include("includes/footer.php"); ?>

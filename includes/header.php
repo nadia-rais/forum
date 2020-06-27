@@ -17,21 +17,31 @@ if (isset($_POST["deco"])) {
       <li><a href="topic.php">TOPICS</a></li>
 
       <?php 
-        if (isset($_SESSION["login"])):
-      ?>    
-      <li><a href="profil.php">PROFIL</a></li>
-      <li><a href="profil.php">ESPACE ADMIN</a></li>
+        if (isset($_SESSION["login"])){
+          if($_SESSION["login"] == "admin"){
+          ?>
+          <li><a href="admin.php">ESPACE ADMIN</a></li>
+          <li><a href="moderation.php">ESPACE MODÉRATION</a></li> 
+          <?php 
+          }
+          else{
+          ?>
+         <li><a href="profil.php">PROFIL</a></li>
+     <?php
+          }
+     ?> 
       <li>
         <form  action="index.php" method="post">
-          <input id="deco" name="deco" value="DECONNEXION" type="submit"/>
+          <input class="deco" name="deco" value="DECONNEXION" type="submit"/>
         </form>
       </li>
-
       <?php
-        else :
+        }else{
       ?>
-      <li><a href="connexion.php"> LOGIN &nbsp;</a><i class="far fa-user"></i></li>
-      <?php endif;?>
+      <div id="log">
+      <li><a class="deco" href="connexion.php"> LOGIN &nbsp;<i class="far fa-user"></i></a></li>
+      </div>
+      <?php }?>
     </ul>
   </nav>
 </header>
