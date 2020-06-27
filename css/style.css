@@ -1344,4 +1344,46 @@ footer a:hover{
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+#likebutton{
+  color: transparent;
+  display: flex;
+  background: url(background/likebutton.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 4vh;
+  height: 4vh;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 2px black;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+#likebutton:hover{
+  background-color: cornflowerblue;
+  opacity: 0.5;
+  border: 1px solid cornflowerblue;
+  transition: 1s;
+}
+
+#dislikebutton{
+  color: transparent;
+  display: flex;
+  background: url(background/dislikebutton.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 4vh;
+  height: 4vh;
+  border-radius: 50%;
+  border: none;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+#dislikebutton:hover{
+  background-color: burlywood;
+  opacity: 0.5;
+  border: 1px solid burlywood;
+  transition: 1s;
+}
 
