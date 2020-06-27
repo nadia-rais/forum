@@ -22,22 +22,27 @@ session_start();
     <?php
     
       $db = mysqli_connect("localhost","root","","forum");
-      $request="SELECT * FROM conversation as C INNER JOIN utilisateurs as U ON C.id_utilisateur=U.id INNER JOIN topic as T ON C.id_topic=T.id ORDER BY C.id desc";
+      $request="SELECT * FROM conversation as C INNER JOIN utilisateurs as U ON C.id_utilisateur=U.id INNER JOIN topic as T ON C.id_topic=T.id_topic WHERE C.id_topic=".$_GET['id_topic']." ORDER BY C.id_conversation";
       $query=mysqli_query($db,$request);
-      //$value=mysqli_fetch_assoc($query);
+      if(mysqli_num_rows($query)==0){
+        echo "<p>Pas de conversation dans ce Topic.</p><br>";
+      }
 
-      echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>".$value['topic']."</th></thead><tbody>";
+      echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>".$_GET['topic_name']."</th></thead><tbody>";
 
       while($value=mysqli_fetch_assoc($query)){
-        echo '------------';
-        var_dump($value);
-        echo '------------';
-          echo "<tr><td id='left-livre'><p>".$value['id'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a></td>";
-          echo "<td id='right-livre'><a href='conversation.php'>".$value['msg_conv']."</a></td></tr>";
+        
+          echo "<tr><td id='left-livre'><p>".$value['id_conversation'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a></td>";
+          echo "<td id='right-livre'><a href='message.php?id_conversation=".$value['id_conversation']."&msg_conv=".$value['msg_conv']."'>".$value['msg_conv']."</a></td></tr>";
       }
 
         echo "</tbody></table>";
-        echo "<input id='button-valider' type='submit' value='Ajouter une conversation' name='submit'>";
+
+        echo "<form action='ajout_conversation.php' method='POST'>
+              <input id='button-valider' type='submit' value='Ajouter une Conversation' name='submit'>
+              <input type='hidden' name='id_topic' value='".$_GET['id_topic']."'>
+              <input type='hidden' name='topic_name' value='".$_GET['topic_name']."'>
+              </form>";
 
       
     ?>

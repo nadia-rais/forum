@@ -30,7 +30,7 @@ session_start();
       while($value=mysqli_fetch_assoc($query)){
 
           echo "<tr><td id='left-livre'><p>".$value['id_topic'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a></td>";
-          echo "<td id='right-livre'><a href='conversation.php'>".$value['topic_name']."</a></td></tr>";
+          echo "<td id='right-livre'><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a></td></tr>";
       }
 
       echo "</tbody></table>";
