@@ -43,7 +43,7 @@ IDEM POUR LES CATÉGORIES*/
           ?> 
           </section>
           <section id="section-top">
-          <h2>LISTE TOPICS</h2>
+          <h2>LISTE CATEGORIES</h2>
           <?php
            	/*foreach ($categories as $value){
 		
