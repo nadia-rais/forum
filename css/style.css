@@ -1316,6 +1316,76 @@ footer a:hover{
 
  }
 }
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*** MEMBERS ***/
+#profile-content1{
+  background-color: #031128;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#profile-content1 h1{
+  color: goldenrod;
+}
+
+#modification1{
+  width: 40%;
+  overflow: hidden;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 15vh;
+  box-shadow: 0 0 10px #00000070;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+  margin-left: 30%;
+}
+
+
+#formmodif1 input[type=submit]{
+	height: 40px;
+	background: #fff;
+	border: 1px solid goldenrod;
+	cursor: pointer;
+	border-radius: 2px;
+	color: goldenrod;
+	font-family: 'Exo', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+  padding: 4px;
+  margin-top: 5%;
+}
+
+#formmodif1 input:hover{
+	color: goldenrod;
+  background:#031128;
+  transition: 1s;
+
+}
+
+/*** RESPONSIVE MEMBERS***/
+
+@media screen and (max-width:980px) {
+  #modification1{
+    width: 60%;
+    margin-left: 20%;
+   
+  }
+  #profile-content1 h1{
+    text-align: center;
+  }
+  
+ 
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*** MODERATEUR ***/
@@ -1529,6 +1599,7 @@ td {
   }
  
 }
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*** MESSAGE ***/
