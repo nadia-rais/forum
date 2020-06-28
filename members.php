@@ -87,6 +87,15 @@ if (isset($_SESSION["login"])){
 
           header("location:admin.php");
          }
+         if(isset ($_POST['submit'])){
+          
+          $value= $_POST['droits'];
+
+          $request2 = "UPDATE `utilisateurs` SET `id_droits`='$value' WHERE utilisateurs.id = '$_GET[id]'";
+          $droits = mysqli_query($connect, $request2);
+
+          header("location:admin.php");
+         }
         ?>  
   </main>
   <footer>
