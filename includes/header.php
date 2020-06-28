@@ -5,7 +5,6 @@ if (isset($_POST["deco"])) {
     header('Location:index.php');
 }
 ?>
-
 <header>
   <nav>
     <section id="top-logo">
@@ -13,9 +12,6 @@ if (isset($_POST["deco"])) {
       <a id="header-title" href="index.php">THE WOW'S CLAN</a>
     </section>
     <ul id="nav__links">
-      <li><a href="categorie.php">CATEGORIES</a></li>
-      <li><a href="topic.php">TOPICS</a></li>
-
       <?php 
         if (isset($_SESSION["login"])){
           if($_SESSION["login"] == "admin"){
@@ -26,7 +22,9 @@ if (isset($_POST["deco"])) {
           }
           else{
           ?>
-         <li><a href="profil.php">PROFIL</a></li>
+          <li><a href="topic.php">TOPICS</a></li>
+          <li><a href="categorie.php">CATEGORIES</a></li>
+          <li><a href="profil.php">PROFIL</a></li>
      <?php
           }
      ?> 
@@ -38,10 +36,10 @@ if (isset($_POST["deco"])) {
       <?php
         }else{
       ?>
+      </ul>
       <div id="log">
-      <li><a class="deco" href="connexion.php"> LOGIN &nbsp;<i class="far fa-user"></i></a></li>
+        <a class="deco" href="connexion.php"> LOGIN &nbsp;<i class="far fa-user"></i></a></li>
       </div>
       <?php }?>
-    </ul>
   </nav>
 </header>
