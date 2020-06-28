@@ -1313,76 +1313,100 @@ footer a:hover{
 
  .profile-card{
    width: 380px;
+   margin-bottom: 2.5%;
 
  }
 }
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*** MEMBERS ***/
 #profile-content1{
-  background-color: #031128;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-evenly;
+ background-color: #031128;
+ height: 80vh;
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+ justify-content: space-evenly;
 }
 
 #profile-content1 h1{
-  color: goldenrod;
+ color: goldenrod;
 }
 
 #modification1{
-  width: 40%;
-  overflow: hidden;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  height: 15vh;
-  box-shadow: 0 0 10px #00000070;
-  border: 1px solid goldenrod;
-  color: goldenrod;
-  margin-top: 2.5%;
-  margin-bottom: 2.5%;
-  margin-left: 30%;
+ width: 40%;
+ overflow: hidden;
+ text-align: center;
+ align-items: center;
+ justify-content: space-evenly;
+ display: flex;
+ flex-direction: column;
+ height: 30vh;
+ box-shadow: 0 0 10px #00000070;
+ border: 1px solid goldenrod;
+ color: goldenrod;
+ margin-top: 2.5%;
+ margin-bottom: 2.5%;
+ margin-left: 30%;
 }
 
 
 #formmodif1 input[type=submit]{
-	height: 40px;
-	background: #fff;
-	border: 1px solid goldenrod;
-	cursor: pointer;
-	border-radius: 2px;
-	color: goldenrod;
-	font-family: 'Exo', sans-serif;
-	font-size: 14px;
-	font-weight: 400;
-  padding: 4px;
-  margin-top: 5%;
+ height: 40px;
+ background: #fff;
+ border: 1px solid goldenrod;
+ cursor: pointer;
+ border-radius: 2px;
+ color: goldenrod;
+ font-family: 'Exo', sans-serif;
+ font-size: 14px;
+ font-weight: 400;
+ padding: 4px;
+ margin-top: 5%;
 }
 
 #formmodif1 input:hover{
-	color: goldenrod;
-  background:#031128;
-  transition: 1s;
+ color: goldenrod;
+ background:#031128;
+ transition: 1s;
+
+}
+
+#formmodif2 input[type=submit]{
+ height: 40px;
+ background: #fff;
+ border: 1px solid goldenrod;
+ cursor: pointer;
+ border-radius: 2px;
+ color: goldenrod;
+ font-family: 'Exo', sans-serif;
+ font-size: 14px;
+ font-weight: 400;
+ padding: 4px;
+ margin-top: 5%;
+ width: 50%;
+}
+
+#formmodif2 input:hover{
+ color: goldenrod;
+ background:#031128;
+ transition: 1s;
 
 }
 
 /*** RESPONSIVE MEMBERS***/
 
 @media screen and (max-width:980px) {
-  #modification1{
-    width: 60%;
-    margin-left: 20%;
-   
-  }
-  #profile-content1 h1{
-    text-align: center;
-  }
+ #modification1{
+   width: 60%;
+   margin-left: 20%;
   
+ }
+ #profile-content1 h1{
+   text-align: center;
+ }
  
+
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -1433,7 +1457,7 @@ footer a:hover{
 
 #users h1{
  display: flex;
- background-color: #FEC30A;
+ background-color: #CFF8FC;
  justify-content: center;
  align-items: center;
  padding-top: 10px;
@@ -1503,7 +1527,6 @@ footer a:hover{
  letter-spacing: 2px;
 }
 
-
 #container_modo{
  display: flex;
  flex-direction: column;
@@ -1572,34 +1595,48 @@ td {
  font-family: 'Roboto', sans-serif;
  }
 
+td a{
+ font-size: 12px;
+ padding: 4px;
+}
+
+#table1 {
+ width: 100%;
+ overflow: scroll;
+ position: static;
+ border-radius: 10px;
+ color: #110D57;
+ display: inline-block;
+ box-shadow:0 10px 40px rgba(0,0,0,0.08);
+}
+
 /*** RESPONSIVE ADMIN***/
 
 @media screen and (max-width:980px) {
-  #subjects{
-    flex-direction: column;
-    align-items: center;
-  }
-  #containertable{
-    flex-direction: column;
-    align-items: center;
-  }
-  #container_modo{
-    width: 90%;
-  }
-  table{
-    margin-top: 2.5%;
-    width: 90%;
-    font-size: 10px;
-  }
-  #section-top{
-    width: 90%;
-  }
-  #section-top1{
-    width: 90%;
-  }
- 
-}
+ #subjects{
+   flex-direction: column;
+   align-items: center;
+ }
+ #containertable{
+   flex-direction: column;
+   align-items: center;
+ }
+ #container_modo{
+   width: 90%;
+ }
+ table{
+   margin-top: 2.5%;
+   width: 90%;
+   font-size: 10px;
+ }
+ #section-top{
+   width: 90%;
+ }
+ #section-top1{
+   width: 90%;
+ }
 
+}
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*** MESSAGE ***/
@@ -1612,10 +1649,10 @@ td {
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/*** CATEGORIE ***/
+/*** CONVERSATION ***/
 
 
-/*** RESPONSIVE CATEGORIE***/
+/*** RESPONSIVE CONVERSATION***/
 
 @media screen and (max-width:640px) {
 
@@ -1634,45 +1671,44 @@ td {
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #likebutton{
-  color: transparent;
-  display: flex;
-  background: url(background/likebutton.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 4vh;
-  height: 4vh;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 2px black;
-  border: 1px solid lightgray;
-  cursor: pointer;
+ color: transparent;
+ display: flex;
+ background: url(background/likebutton.png);
+ background-size: cover;
+ background-repeat: no-repeat;
+ width: 4vh;
+ height: 4vh;
+ border-radius: 50%;
+ border: none;
+ box-shadow: 2px black;
+ border: 1px solid lightgray;
+ cursor: pointer;
 }
 
 #likebutton:hover{
-  background-color: cornflowerblue;
-  opacity: 0.5;
-  border: 1px solid cornflowerblue;
-  transition: 1s;
+ background-color: cornflowerblue;
+ opacity: 0.5;
+ border: 1px solid cornflowerblue;
+ transition: 1s;
 }
 
 #dislikebutton{
-  color: transparent;
-  display: flex;
-  background: url(background/dislikebutton.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 4vh;
-  height: 4vh;
-  border-radius: 50%;
-  border: none;
-  border: 1px solid lightgray;
-  cursor: pointer;
+ color: transparent;
+ display: flex;
+ background: url(background/dislikebutton.png);
+ background-size: cover;
+ background-repeat: no-repeat;
+ width: 4vh;
+ height: 4vh;
+ border-radius: 50%;
+ border: none;
+ border: 1px solid lightgray;
+ cursor: pointer;
 }
 
 #dislikebutton:hover{
-  background-color: burlywood;
-  opacity: 0.5;
-  border: 1px solid burlywood;
-  transition: 1s;
+ background-color: burlywood;
+ opacity: 0.5;
+ border: 1px solid burlywood;
+ transition: 1s;
 }
-
