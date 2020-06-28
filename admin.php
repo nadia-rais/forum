@@ -6,11 +6,16 @@ $request = "SELECT * FROM utilisateurs ORDER by date DESC";
 $query = mysqli_query($connect, $request);
 $infos = mysqli_fetch_all($query);
 
-/*$request1 = "SELECT * FROM topics ORDER by date DESC";
-$query1 = mysqli_query($connect, $request1);
+$request1 = "SELECT utilisateurs.login, topic.id, topic.topic, topic.date FROM utilisateurs INNER JOIN topic ON utilisateurs.id = topic.id_utilisateur ORDER by date DESC";
+$query1 = mysqli_query($connect , $request1);
 $topics = mysqli_fetch_all($query1);
-IDEM POUR LES CATÉGORIES*/
+
+/*$request2 = "SELECT utilisateurs.login, conversation.id, conversation.conversation, conversation.date FROM utilisateurs INNER JOIN conversation ON utilisateurs.id = conversation.id_utilisateur ORDER by date DESC";
+$query2 = mysqli_query($connect , $request2);
+$conversations = mysqli_fetch_all($query2);*/
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,13 +31,16 @@ IDEM POUR LES CATÉGORIES*/
        <?php include("includes/header.php"); ?>
     </header>
     <main>
-    <section id="container-admin">
+      <section id="container-admin">
         <h1>ESPACE ADMINISTRATEUR</h1>
         <section id="subjects">
           <section id="section-top1">
-          <h2>LISTE TOPICS</h2>
+          <h2>LISTE CONVERSATIONS
+            <a href="ajout_conversation.php"> &nbsp; + ajouter</a>
+          </h2>
+          
           <?php
-           	/*foreach ($topics as $value){
+           	/*foreach ($conv as $val){
 		
               echo "<tbody>
 
@@ -43,17 +51,32 @@ IDEM POUR LES CATÉGORIES*/
           ?> 
           </section>
           <section id="section-top">
-          <h2>LISTE CATEGORIES</h2>
+          <h2>LISTE TOPICS
+            <a href="ajout_topic.php">&nbsp; + ajouter</a>
+          </h2>
+          <table id="table1">
+			      <thead>
+			        <tr>
+              <th>id</td>
+				      <th>titre</td>
+              <th>nom_user</td>
+              <th>date création</td>
+              <th></td> 
+			        </tr>
+			      </thead>
           <?php
-           	/*foreach ($categories as $value){
-		
-              echo 
-
-              mettre les categories + lien modifier 
-               
-             }*/
-          
+           	foreach ($topics as $val){
+              echo "<tbody>
+              <tr>
+              <td>$val[1] </td>
+              <td>$val[2] </td>
+              <td>$val[0] </td>
+              <td>$val[3] </td>
+              <td><a href='topic.php?id=$val[0]'>MODIFIER</a></td>
+              </tr></tbody>";
+            }
           ?> 
+            </table>
           </section>
         </section>
       </section>
@@ -61,23 +84,38 @@ IDEM POUR LES CATÉGORIES*/
       <section id="users">
         <h1>LISTE DES MEMBRES</h1>
         <section id="containertable">
-          <section id="container_modo">
-            <h2>LISTE DES MODÉRATEURS</h2>
+          <aside id="container_modo">
+            <h2>MODÉRATEURS</h2>
+            <table id="table1">
+			      <thead>
+			        <tr>
+              <th>id</td>
+              <th>nom_user</td>
+              <th>date création</td>
+              <th></td> 
+			        </tr>
+			      </thead>
             <?php
-           	/*foreach ($categories as $value){
-		
-              echo 
-
-              mettre les noms des modérateurs  + lien modifier
-               
-             }*/
+           	foreach ($infos as $val){
+               if ($val[5]== "2"){
+		         echo "<tbody>
+              <tr>
+              <td>$val[0] </td>
+              <td>$val[2] </td>
+              <td>$val[8] </td>
+              <td><a href='topic.php?id=$val[0]'>MODIFIER</a></td>
+              </tr></tbody>";
+              }
+            }
           
           ?> 
-          </section>
+           </table>
+          </aside>
     
           <table>
 			      <thead>
 			        <tr>
+              <th>id</td>
 				      <th>pseudo</td>
 				      <th>login</td>
 			      	<th>password</td>
@@ -92,6 +130,7 @@ IDEM POUR LES CATÉGORIES*/
            	foreach ($infos as $value){
               echo "<tbody>
                 <tr>
+                <td>$value[0] </td>
                 <td>$value[1] </td>
                 <td>$value[2] </td>
                 <td>$value[3] </td>
