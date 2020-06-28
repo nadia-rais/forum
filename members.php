@@ -4,9 +4,9 @@ $connect = mysqli_connect('localhost','root','','forum');
 
 if (isset($_SESSION["login"])){
   
-  $requete1 = "SELECT * FROM utilisateurs WHERE utilisateurs.id = '$_GET[id]'";
-  $query1 = mysqli_query($connect, $requete1);
-  $members = mysqli_fetch_all($query1);
+  $request = "SELECT * FROM utilisateurs WHERE utilisateurs.id = '$_GET[id]'";
+  $query = mysqli_query($connect, $request);
+  $members = mysqli_fetch_all($query);
 
 }
 
@@ -61,19 +61,29 @@ if (isset($_SESSION["login"])){
         if($_SESSION["login"] == "admin"){
         ?>
         <section id="modification1">
+
+          <h1>modifier l'accès</h1>
+            <form id="formmodif2"method="POST" action="">
+            <select name="droits" id="select">
+              <option value="">--sélectionner les droits--</option>
+              <option value="1">user</option>
+              <option value="2">moderateur</option>
+              <option value="3">admin</option>
+            </select>
+              <input type="submit" name="submit" value="valider">
+            </form> 
+
           <h1>supprimer le compte</h1>
           <form id="formmodif1"method="POST" action="">
-              <input id="button-modif" type="submit" name="submit" value="supprimer le compte">
+              <input type="submit" name="submit1" value="supprimer le compte">
           </form> 
         </section>
         <?php
          }
-         if(isset ($_POST['submit'])){
+         if(isset ($_POST['submit1'])){
 
-          $requete2 = "DELETE * FROM utilisateurs WHERE utilisateurs.id = '$_GET[id]'";
+          $requete2 = "DELETE FROM utilisateurs WHERE utilisateurs.id = '$_GET[id]'";
           $query2 = mysqli_query($connect, $requete2);
-         
-          //requete pas encore testée
 
           header("location:admin.php");
          }
