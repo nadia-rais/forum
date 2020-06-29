@@ -6,11 +6,11 @@ $request = "SELECT * FROM utilisateurs ORDER by date DESC";
 $query = mysqli_query($connect, $request);
 $infos = mysqli_fetch_all($query);
 
-$request1 = "SELECT utilisateurs.login, topic.id, topic.topic, topic.date FROM utilisateurs INNER JOIN topic ON utilisateurs.id = topic.id_utilisateur ORDER by date DESC";
+$request1 = "SELECT utilisateurs.login, topic.id_topic, topic.topic_name, topic.date FROM utilisateurs INNER JOIN topic ON utilisateurs.id = topic.id_utilisateur ORDER by date DESC";
 $query1 = mysqli_query($connect , $request1);
 $topics = mysqli_fetch_all($query1);
 
-$request2 = "SELECT signaler.id, signaler.id_utilisateur, signaler.id_message, message.messages FROM signaler INNER JOIN message ON signaler.id_message = message.id";
+$request2 = "SELECT signaler.id, signaler.id_utilisateur, signaler.id_message, messages.message FROM signaler INNER JOIN messages ON signaler.id_message = messages.id";
 $query2 = mysqli_query($connect , $request2);
 $signal = mysqli_fetch_all($query2);
 
@@ -135,7 +135,7 @@ $conversations = mysqli_fetch_all($query2);*/
               <tr>
               <td>$val[0] </td>
               <td>$val[2] </td>
-              <td>$val[8] </td>
+              <td>$val[7] </td>
               <td><a href='topic.php?id=$val[0]'>MODIFIER</a></td>
               </tr></tbody>";
               }
@@ -168,7 +168,6 @@ $conversations = mysqli_fetch_all($query2);*/
                 <td>$value[3] </td>
                 <td>$value[4] </td>
                 <td>$value[7] </td>
-                <td>$value[8] </td>
                 <td><img id='minipic' src=$value[6] alt='profilepic'</td>
                 <td><a href='members.php?id=$value[0]'>MODIFIER</a></td>
                 </tr>
