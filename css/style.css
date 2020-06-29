@@ -276,8 +276,7 @@ footer a:hover{
  font-size: 11px;
  color: #057CB3;
 }
-
-    
+     
 /***RESPONSIVE HEADER + FOOTER***/
 @media (max-width: 780px) {
  nav{
@@ -308,15 +307,6 @@ footer a:hover{
    align-items: center;
    margin-left: -7.5%;
  }
-
- #log{
-  margin-left: 0;
-  margin-top: -5%;
-  padding-bottom: 2.5%;
-  width: 100%;
-  justify-content: center;
- }
-   
 
 }
 
@@ -1621,6 +1611,33 @@ td a{
  box-shadow:0 10px 40px rgba(0,0,0,0.08);
 }
 
+#section-bottom{
+ display: flex;
+ width: 100%;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ margin-bottom: 2.5%;
+}
+
+#section-bottom h2{
+ display: flex;
+ background-color: gray;
+ width: 90%;
+ justify-content: center;
+ letter-spacing: 5px;
+ font-family: 'Roboto', sans-serif;
+}
+
+#table2 {
+ width: 90%;
+ position: static;
+ border-radius: 10px;
+ color: #110D57;
+ display: inline-block;
+ box-shadow:0 10px 40px rgba(0,0,0,0.08);
+}
+
 /*** RESPONSIVE ADMIN***/
 
 @media screen and (max-width:980px) {
@@ -1723,3 +1740,4 @@ td a{
  border: 1px solid burlywood;
  transition: 1s;
 }
+

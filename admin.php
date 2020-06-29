@@ -10,6 +10,10 @@ $request1 = "SELECT utilisateurs.login, topic.id, topic.topic, topic.date FROM u
 $query1 = mysqli_query($connect , $request1);
 $topics = mysqli_fetch_all($query1);
 
+$request2 = "SELECT signaler.id, signaler.id_utilisateur, signaler.id_message, message.messages FROM signaler INNER JOIN message ON signaler.id_message = message.id";
+$query2 = mysqli_query($connect , $request2);
+$signal = mysqli_fetch_all($query2);
+
 /*$request2 = "SELECT utilisateurs.login, conversation.id, conversation.conversation, conversation.date FROM utilisateurs INNER JOIN conversation ON utilisateurs.id = conversation.id_utilisateur ORDER by date DESC";
 $query2 = mysqli_query($connect , $request2);
 $conversations = mysqli_fetch_all($query2);*/
@@ -79,6 +83,33 @@ $conversations = mysqli_fetch_all($query2);*/
             </table>
           </section>
         </section>
+
+        <section id="section-bottom">
+          <h2>SIGNALEMENTS</h2>
+          <table id="table2">
+			      <thead>
+			        <tr>
+              <th>id</td>
+              <th>id_messages</td>
+              <th>id_user</td>
+              <th>message</td>
+              <th></td> 
+			        </tr>
+			      </thead>
+          <?php
+           	foreach ($signal as $val1){
+              echo "<tbody>
+              <tr>
+              <td>$val1[0] </td>
+              <td>$val1[2] </td>
+              <td>$val1[1] </td>
+              <td>$val1[3] </td>
+              <td><a href='message.php?id=$val1[0]'>SUPPRIMER</a></td>
+              </tr></tbody>";
+            }
+          ?> 
+            </table>
+          </section>
       </section>
 
       <?php if($_SESSION["login"] == "admin"):?>
