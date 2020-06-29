@@ -1,6 +1,6 @@
 <?php
 session_start();
-$connect = mysqli_connect("localhost", "root", "", 'forum');
+$connect = mysqli_connect("localhost", "root", "root", 'forum');
 
 $request = "SELECT * FROM utilisateurs ORDER by date DESC";
 $query = mysqli_query($connect, $request);
@@ -32,7 +32,7 @@ $conversations = mysqli_fetch_all($query2);*/
     </header>
     <main>
       <section id="container-admin">
-        <h1>ESPACE ADMINISTRATEUR</h1>
+        <h1>PANEL BOARD</h1>
         <section id="subjects">
           <section id="section-top1">
           <h2>LISTE CONVERSATIONS
@@ -81,6 +81,8 @@ $conversations = mysqli_fetch_all($query2);*/
         </section>
       </section>
 
+      <?php if($_SESSION["login"] == "admin"):?>
+              
       <section id="users">
         <h1>LISTE DES MEMBRES</h1>
         <section id="containertable">
@@ -106,8 +108,7 @@ $conversations = mysqli_fetch_all($query2);*/
               <td><a href='topic.php?id=$val[0]'>MODIFIER</a></td>
               </tr></tbody>";
               }
-            }
-          
+            }   
           ?> 
            </table>
           </aside>
@@ -142,11 +143,11 @@ $conversations = mysqli_fetch_all($query2);*/
                 </tr>
                 </tbody>";
               }
-
           ?> 
           </table>
         </section>
       </section>
+      <?php endif ?>
     </main>
     <footer>
       <?php include("includes/footer.php"); ?>
