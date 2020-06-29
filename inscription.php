@@ -55,7 +55,6 @@
                     $repeatpassword = ($_POST['passwordrepeat']);
 
                     $profiledefault = ("https://i.ibb.co/mG6M0f5/empty-profile-picture.jpg"); //variable pour insérer une photo de profil par défaut à l'inscription
-                    $statutdefault = 0;                                                       //variable pour insérer un statut par défaut à l'inscription
                     $droits = 1;                                                              //variable pour insérer les droits par défaut à l'inscription
 
                     $connect = mysqli_connect('localhost', 'root', '','forum');
@@ -73,7 +72,7 @@
 
                             if ($password == $repeatpassword) {
       
-                            $requete = "INSERT INTO `utilisateurs`(`login`, `pseudo`, `password`, `email`, `id_droits`, `avatar`, `statut`, `date`) VALUES ('$login','$pseudo','$password','$mail','$droits','$profiledefault','$statutdefault', NOW())";
+                            $requete = "INSERT INTO `utilisateurs`(`login`, `pseudo`, `password`, `email`, `id_droits`, `avatar`, `date`) VALUES ('$login','$pseudo','$password','$mail','$droits','$profiledefault', NOW())";
                             $query = mysqli_query($connect, $requete);
                             var_dump($query);
 

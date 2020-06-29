@@ -59,6 +59,41 @@ if (isset($_POST["deco"])) {
         <section class="topics">
         <h2>TOPICS</h2>
         <hr>
+
+        <?php
+          
+          $db = mysqli_connect("localhost","root","","forum");
+          $request_topic="SELECT * FROM topic as T INNER JOIN utilisateurs as U ON T.id_utilisateur=U.id ORDER BY T.id_topic desc LIMIT 4";
+          $query_topic=mysqli_query($db,$request_topic);
+
+          if(mysqli_num_rows($query_topic)==0){
+            echo "<p>Pas de Topic.</p><br>";
+          }
+
+          else{
+
+            echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>Les Topics</th></thead><tbody>";
+
+            while($value=mysqli_fetch_assoc($query_topic)){
+  
+                echo "<tr><td id='left-livre'><p>".$value['id_topic'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a> le : ".$value['date']."</td>";
+                echo "<td id='right-livre'><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a></td></tr>";
+            }
+  
+            echo "</tbody></table>";
+
+          }
+          
+
+          // if($value['id_droits']==2 || $value['id_droits']==3){
+
+            echo "<form action='ajout_topic.php' method='POST'>
+                  <input id='button-valider' type='submit' value='Ajouter un Topic' name='submit'>
+                  </form>";
+          // }
+
+          
+        ?>
           <section id="sub-topics">
 
             <section id="sub">

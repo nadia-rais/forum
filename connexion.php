@@ -1,5 +1,7 @@
 <?php session_start();
-$connect = mysqli_connect("localhost", "root","", "livreor");
+if(isset($_SESSION['login'])){
+  header("location:index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,59 +19,53 @@ $connect = mysqli_connect("localhost", "root","", "livreor");
       <?php include("includes/header.php")?>
     </header>
     <main>
-    <div id="container-connexion">
-        <form action="connexion.php" method="POST" id="form-connexion">
-          <h1 id="form-title">CONNEXION</h1>
-          <h2 id="subtitle-connexion">MUSEUM OF MARSEILLE</h2>
-          <div class="part1-connexion">
-            <label for="nom">login</label>
-            <input type="text" name="login" class="login-connexion"/>
-          </div>
-          <div class="part1-connexion">
-            <label>password</label>
-            <input type="password" name="password" placeholder="Entrer le mot de passe"/>
-          </div>
-          <div>
-            <input type="submit" id="log-connexion" name="submit" value="se connecter"/>
-          </div> 
-         <p id="ins-connexion">Pas encore inscrit ?
-           <a href="inscription.php">Créez votre compte en quelques clics.</a>
-         </p>
-        </form>
-      </div>
-      <div>
-        <?php 
-          if (isset($_POST['submit'])){
-            $login = $_POST['login'];
-            $password = $_POST['password'];
+    <section id="container-connexion">
+
+        <section id="cont-form">
+          <section id="title-connect">
+            <h1>welcome back !</h1>
+          </section>
+		      <form class="login" method="post" action="connexion.php">
+				    <input type="text" placeholder="login" name="login" placeholder="login">
+				    <input type="password" placeholder="password" name="password" placeholder="password"><br>
+            <input type="submit" value="Login" value="CONNEXION" name="submit">
+          </form>
+
+          <?php
+          if ((isset($_POST['login'])) && (isset($_POST['password']))){
+
+            if ((!empty($_POST['login'])) && (!empty($_POST['password']))){
+
+            $connect = mysqli_connect('localhost','root','','forum');
+
+            if(! $connect){die("Error  : ". mysql_error());}
+
+            $request = "SELECT * FROM utilisateurs WHERE login='$_POST[login]'&&password='$_POST[password]'";
+            $result = mysqli_query($connect, $request);
+            $fetch = mysqli_fetch_assoc($result);
            
+            if ($result){
 
-            if($login && $password == true){
-              
-              $requete = "SELECT * FROM utilisateurs WHERE login ='".$_POST['login']."'";
-              $query = mysqli_query($connect, $requete);
-              $rows = mysqli_num_rows($query);
-              var_dump($rows);
+            $row = mysqli_num_rows($result);
 
-              if($rows==0){
-                $_SESSION['id']=$id;
-              }
-
-              elseif($rows==1){
-                $_SESSION['login']=$login;
-               
-              }
-              else{
-                echo '<div id="message">'.'<p>password ou login invalide !</p>';
-              }
+            if ($row){
+            $_SESSION['login']=$_POST['login'];
+            $login=$_SESSION['login'];
+            $_SESSION['id']=$fetch['id'];
+            $_SESSION['id_droits']=$fetch['id_droits'];
+            
+            
+            header("location:index.php");
             }
-            else{
-              echo '<div id="message">'.'<p>veuillez saisir tous les champs !</p>';
+
+            else echo '</br><span class="errormessage">Login ou mot de passe incorrect</span>';
             }
+          }else echo '<span class="errormessage">Veuillez remplir tous les champs</span></br>';
           }
-         
-        ?>
-      </div>
+          ?>
+        </section>
+        <p><a id="linkconnect" href="inscription.php">Pas encore inscrit ? Rejoins-nous maintenant !</a></p>
+      </section>
     </main>
     <footer>
       <?php include("includes/footer.php");?>
