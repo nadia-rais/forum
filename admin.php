@@ -1,6 +1,6 @@
 <?php
 session_start();
-$connect = mysqli_connect("localhost", "root", "root", 'forum');
+$connect = mysqli_connect("localhost", "root", "", 'forum');
 
 $request = "SELECT * FROM utilisateurs ORDER by date DESC";
 $query = mysqli_query($connect, $request);

@@ -5,6 +5,7 @@ if (isset($_POST["deco"])) {
     header('Location:index.php');
 }
 ?>
+
 <header>
   <nav>
     <section id="top-logo">
@@ -14,10 +15,10 @@ if (isset($_POST["deco"])) {
     <ul id="nav__links">
       <?php 
         if (isset($_SESSION["login"])){
-          if($_SESSION["login"] == "admin"){
+          if($_SESSION["login"] == "admin" OR $_SESSION["login"] == "moderateur"){
           ?>
-          <li><a href="admin.php">ESPACE ADMIN</a></li>
-          <li><a href="moderation.php">ESPACE MODÉRATION</a></li> 
+          <li><a href="topic.php">TOPICS</a></li>
+          <li><a href="admin.php">PANEL BOARD</a></li>
           <?php 
           }
           else{
