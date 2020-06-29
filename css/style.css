@@ -277,14 +277,7 @@ footer a:hover{
  color: #057CB3;
 }
 
-#log{
- margin-left: 0;
- margin-top: -5%;
- padding-bottom: 2.5%;
- width: 100%;
- justify-content: center;
-}
-      
+    
 /***RESPONSIVE HEADER + FOOTER***/
 @media (max-width: 780px) {
  nav{
@@ -315,6 +308,15 @@ footer a:hover{
    align-items: center;
    margin-left: -7.5%;
  }
+
+ #log{
+  margin-left: 0;
+  margin-top: -5%;
+  padding-bottom: 2.5%;
+  width: 100%;
+  justify-content: center;
+ }
+   
 
 }
 
