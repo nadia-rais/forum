@@ -26,10 +26,19 @@ else{
 
             <?php
 
+<<<<<<< Updated upstream
 if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
+=======
+      $request1="SELECT id FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+      $query1=mysqli_query($db,$request1);
+      $infos = mysqli_fetch_all($query1);
+      
+      $iduser= $infos[0][0];
+>>>>>>> Stashed changes
 
     echo "
 
+<<<<<<< Updated upstream
 <nav>
 <ul>
     <li><a href='index.php'>Accueil</a></li>
@@ -70,16 +79,72 @@ else{
     
             </section>
         </header>
+=======
+      if(mysqli_num_rows($query)==0){
+        
+        echo "<tr><td colspan='2' id='thead-text'>Pas de messages dans cette Conversation.</td><tr>";
+      }
+// SIGNALER
+      if(isset($_POST['reportbutton'])){
+
+        $id=$_POST['id'];
+
+        $db = mysqli_connect("localhost","root","","forum");
+
+        $_SESSION['messageid']=$id;
+                       
+
+        $request5="SELECT FROM `message` WHERE id = $id";
+        $query5=mysqli_query($db,$request5);
+
+        header("location:signalement-message.php");
+
+    }
+//
+      while($value=mysqli_fetch_assoc($query)){
+        
+>>>>>>> Stashed changes
 
         <main id='main-chat-test'>
 
+<<<<<<< Updated upstream
         <section class="main-article" id="main-article-chat">
+=======
+             //on compte tous les likes pour les afficher à côté de l'icone like pour chaque message
+              $requestcountlikes = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage AND reaction = 1 ";
+              $query_a = mysqli_query($db, $requestcountlikes);
+              $countlikes = mysqli_fetch_all($query_a);
+
+            //on compte tous les dislikes pour les afficher à côté de l'icone dislike pour chaque message
+              $requestcountdislikes = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage  AND reaction = -1 ";
+              $query_b = mysqli_query($db, $requestcountdislikes);
+              $countdislikes = mysqli_fetch_all($query_b);
+
+            //on compte toutes les entrées likes effectuées par l'utilisateur pour un message
+              $requestcountlikesbyid = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage  AND id_utilisateur = $iduser AND reaction = 1";
+              $query_c = mysqli_query($db, $requestcountlikesbyid);
+              $countlikesbyid = mysqli_fetch_all($query_c);
+
+            //on compte toutes les entrées likes effectuées par l'utilisateur pour un message
+              $requestcountbyid = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1 ";
+              $query_d = mysqli_query($db, $requestcountbyid);
+              $countdislikesbyid = mysqli_fetch_all($query_d);
+>>>>>>> Stashed changes
         
         <?php
 
                 if(isset($_POST['message'])){
 
+<<<<<<< Updated upstream
                     $db = mysqli_connect("localhost","root","","forum");
+=======
+                   echo " <form method='post' action =''>
+                   <td><input id='button_report' type='submit' value='Signaler' name='reportbutton'></td>
+                   <td>  <input type='hidden' name='id' value='$value[id_message]'></form></td>";
+
+            echo '<td><p>' .$countlikes[0][0].' &nbsp; people like this</p></td>';
+            echo '<td><p>' .$countdislikes[0][0].' &nbsp; people dislike this</p></td></tr>';
+>>>>>>> Stashed changes
 
                     $request="SELECT id FROM utilisateurs WHERE login='$_SESSION[login]'";
                     $query=mysqli_query($db,$request);
