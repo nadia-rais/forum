@@ -48,14 +48,14 @@ $connect = mysqli_connect('localhost','root','','forum');
             <div class="modif">
               <label for="login">nouveau login</label><br>
               <input id="login-profil" type="text" value="nouveau login" name="login">
-              <input id="button-modif" type="submit" name="submit3" value="modifier">
+              <input id="button-modif" type="submit" name="submit2" value="modifier">
             </div>
             <div class="modif">
               <label class="labpass" for="password">nouveau password</label><br>
               <input id="login-password" type="password" value="nouveau password" name="password">
               <label class="labpass" for="passwordrepeat">confirmer password</label>
               <input type="password" name="passwordrepeat">
-              <input id="button-modif" type="submit" name="submit4" value="modifier">
+              <input id="button-modif" type="submit" name="submit2" value="modifier">
             </div>
           </form> 
         </section>
@@ -96,7 +96,7 @@ $connect = mysqli_connect('localhost','root','','forum');
 
         
         //update login
-        if(isset($_POST['submit3']) && (!empty($_POST['login']))){
+        if(isset($_POST['submit2']) && (!empty($_POST['login']))){
 
           $login = ($_POST['login']);
   
@@ -107,7 +107,7 @@ $connect = mysqli_connect('localhost','root','','forum');
         }
 
         //update password
-        if(isset($_POST['submit4'])){
+        if(isset($_POST['submit2']) && (!empty($_POST['password']))){
 
           $password = ($_POST['password']);
           $password_repeat = ($_POST['passwordrepeat']);
