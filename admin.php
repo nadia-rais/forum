@@ -1,6 +1,25 @@
 <?php
 session_start();
+$connect = mysqli_connect("localhost", "root", "", 'forum');
+
+$request = "SELECT * FROM utilisateurs ORDER by date DESC";
+$query = mysqli_query($connect, $request);
+$infos = mysqli_fetch_all($query);
+
+$request1 = "SELECT utilisateurs.login, topic.id_topic, topic.topic_name, topic.date_topic FROM utilisateurs INNER JOIN topic ON utilisateurs.id = topic.id_utilisateur ORDER by date DESC";
+$query1 = mysqli_query($connect , $request1);
+$topics = mysqli_fetch_all($query1);
+
+$request2 = "SELECT signaler.id, signaler.id_utilisateur, signaler.id_message, messages.message FROM signaler INNER JOIN messages ON signaler.id_message = messages.id_message";
+$query2 = mysqli_query($connect , $request2);
+$signal = mysqli_fetch_all($query2);
+
+/*$request2 = "SELECT utilisateurs.login, conversation.id, conversation.conversation, conversation.date FROM utilisateurs INNER JOIN conversation ON utilisateurs.id = conversation.id_utilisateur ORDER by date DESC";
+$query2 = mysqli_query($connect , $request2);
+$conversations = mysqli_fetch_all($query2);*/
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,140 +32,155 @@ session_start();
 </head>
 <body>
     <header>
-    <head>
-        <title>Connexion</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/discussion.css">
-        <link href="https://fonts.googleapis.com/css2?family=Chivo&family=Noto+Sans+JP&display=swap" rel="stylesheet">
-    </head>
-
-    <body>
-        
-        <header>
-            <section>
-
-                <?php
-
-                if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
-    
-                    echo "
-
-                <nav>
-                <ul>
-                    <li><a href='index.php'>Accueil</a></li>
-                    <li><a href='message.php'>Chat</a></li>
-                    <li><a href='profil.php'>Profil</a></li>
-                    <li><a href='logout.php'>Déconnexion</a></li>
-                </ul>
-                </nav>
-
-                 ";}
-                 elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
-                    
-                    echo "
-
-                    <nav>
-                    <ul>
-                        <li><a href='index.php'>Accueil</a></li>
-                        <li><a href='message.php'>Chat</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href='admin.php'>Admin</a></li>
-                        <li><a href='logout.php'>Déconnexion</a></li>
-                    </ul>
-                    </nav>
-    
-                     ";}
-                else{
-                    echo "
-
-                <nav>
-                <ul>
-                    <li><a href='index.php'>Accueil</a></li>
-                    <li><a href='inscription.php'>Inscription</a></li>
-                    <li><a href='connexion.php'>Connexion</a></li>
-                </ul>
-                </nav>
-
-                 ";} ?>
+       <?php include("includes/header.php"); ?>
     </header>
     <main>
-      <section class="info2">
-        <?php
+      <section id="container-admin">
+        <h1>PANEL BOARD</h1>
+        <section id="subjects">
+          <section id="section-top1">
+          <h2>LISTE CONVERSATIONS
+            <a href="ajout_conversation.php"> &nbsp; + ajouter</a>
+          </h2>
+          
+          <?php
+           	/*foreach ($conv as $val){
+		
+              echo "<tbody>
 
-        if(($_SESSION['login'])=='admin'){
+              mettre les titres + lien modifier 
+               
+             }*/
+          
+          ?> 
+          </section>
+          <section id="section-top">
+          <h2>LISTE TOPICS
+            <a href="ajout_topic.php">&nbsp; + ajouter</a>
+          </h2>
+          <table id="table1">
+			      <thead>
+			        <tr>
+              <th>id</td>
+				      <th>titre</td>
+              <th>nom_user</td>
+              <th>date création</td>
+              <th></td> 
+			        </tr>
+			      </thead>
+          <?php
+           	foreach ($topics as $val){
+              echo "<tbody>
+              <tr>
+              <td>$val[1] </td>
+              <td>$val[2] </td>
+              <td>$val[0] </td>
+              <td>$val[3] </td>
+              <td><a href='topic.php?id=$val[0]'>MODIFIER</a></td>
+              </tr></tbody>";
+            }
+          ?> 
+            </table>
+          </section>
+        </section>
 
-            $db = mysqli_connect("localhost","root","","forum");
-
-                        $request="SELECT * FROM utilisateurs";
-                        $query=mysqli_query($db,$request);
-                        
-                        ?>
-                        <table>
-                            <thead>
-                                <tr><th colspan="3" id="admin-title">Administration</th></tr>
-                                <tr id="admin-2title">
-                                    <th>ID</th>
-                                    <th>Identifiant</th>
-                                    <th>Mot de passe</th>
-                                </tr>
-                            </thead>
-                            <tbody><?php
-
-                        while($value=mysqli_fetch_assoc($query)){?>
-                                <tr>
-                                    <td id="ID-admin"><?php echo $value['id'] ?></td>
-                                    <td id="ID-admin"><?php echo $value['login'] ?></td>
-                                    <td id="ID-admin"><?php echo $value['password']?></td>
-                                </tr><?php } ?>
-                            </tbody>
-                        </table>
-
-                        <?php
-
-                        $request2="SELECT * FROM signaler";
-                        $query2=mysqli_query($db,$request2);
-                        
-                        ?>
-                        <table>
-                            <thead>
-                                <tr><th colspan="3" id="admin-title">Signalement message</th></tr>
-                                <tr id="admin-2title">
-                                    <th>ID</th>
-                                    <th>Signalement</th>
-                                    <th>id_utilisateur</th>
-                                    <th>id_message</th>
-                                </tr>
-                            </thead>
-                            <tbody><?php
-
-                        while($value2=mysqli_fetch_assoc($query2)){?>
-                                <tr>
-                                    <td id="ID-admin"><?php echo $value2['id'] ?></td>
-                                    <td id="ID-admin"><?php echo $value2['signalement'] ?></td>
-                                    <td id="ID-admin"><?php echo $value2['id_utilisateur']?></td>
-                                    <td id="ID-admin"><?php echo $value2['id_message']?></td>
-                                </tr><?php } ?>
-                            </tbody>
-                        </table>
-
-
-
-
-                        
-
-        <?php
-        }
-
-        else{
-            header("location:index.php");
-        }
-
-
-        ?>
-
+        <section id="section-bottom">
+          <h2>SIGNALEMENTS</h2>
+          <table id="table2">
+			      <thead>
+			        <tr>
+              <th>id</td>
+              <th>id_messages</td>
+              <th>id_user</td>
+              <th>message</td>
+              <th></td> 
+			        </tr>
+			      </thead>
+          <?php
+           	foreach ($signal as $val1){
+              echo "<tbody>
+              <tr>
+              <td>$val1[0] </td>
+              <td>$val1[2] </td>
+              <td>$val1[1] </td>
+              <td>$val1[3] </td>
+              <td><a href='message.php?id=$val1[0]'>SUPPRIMER</a></td>
+              </tr></tbody>";
+            }
+          ?> 
+            </table>
+          </section>
       </section>
+
+      <?php if($_SESSION["login"] == "admin"):?>
+              
+      <section id="users">
+        <h1>LISTE DES MEMBRES</h1>
+        <section id="containertable">
+          <aside id="container_modo">
+            <h2>MODÉRATEURS</h2>
+            <table id="table1">
+			      <thead>
+			        <tr>
+              <th>id</td>
+              <th>nom_user</td>
+              <th>date création</td>
+              <th></td> 
+			        </tr>
+			      </thead>
+            <?php
+           	foreach ($infos as $val){
+               if ($val[7]== "2"){
+		         echo "<tbody>
+              <tr>
+              <td>$val[0] </td>
+              <td>$val[2] </td>
+              <td>$val[6] </td>
+              <td><a href='topic.php?id=$val[0]'>MODIFIER</a></td>
+              </tr></tbody>";
+              }
+            }   
+          ?> 
+           </table>
+          </aside>
+    
+          <table>
+			      <thead>
+			        <tr>
+              <th>id</td>
+				      <th>pseudo</td>
+				      <th>login</td>
+			      	<th>password</td>
+              <th>email</td>
+              <th>statut</td>
+              <th>date création</td>
+              <th>pic</td>
+              <th></td> 
+			        </tr>
+			      </thead>
+          <?php
+           	foreach ($infos as $value){
+              echo "<tbody>
+                <tr>
+                <td>$value[0] </td>
+                <td>$value[1] </td>
+                <td>$value[2] </td>
+                <td>$value[3] </td>
+                <td>$value[4] </td>
+                <td>$value[6] </td>
+                <td><img id='minipic' src=$value[5] alt='profilepic'</td>
+                <td><a href='members.php?id=$value[0]'>MODIFIER</a></td>
+                </tr>
+                </tbody>";
+              }
+          ?> 
+          </table>
+        </section>
+      </section>
+      <?php endif ?>
     </main>
     <footer>
+      <?php include("includes/footer.php"); ?>
     </footer>
 </body>
 </html>

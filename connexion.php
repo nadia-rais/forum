@@ -1,128 +1,74 @@
-<?php
-
-session_start();
-
+<?php session_start();
+if(isset($_SESSION['login'])){
+  header("location:index.php");
+}
 ?>
 
-
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Connexion</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/discussion.css">
-        <link href="https://fonts.googleapis.com/css2?family=Chivo&family=Noto+Sans+JP&display=swap" rel="stylesheet">
-    </head>
+<head>
+    <title>forum - connexion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes"/>
+    <link rel="shortcut icon" type="image/x-icon" href="https://i.ibb.co/8nC21YQ/logo1-wow.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+      <?php include("includes/header.php")?>
+    </header>
+    <main>
+    <section id="container-connexion">
 
-    <body>
-        
-        <header>
-            <section>
+        <section id="cont-form">
+          <section id="title-connect">
+            <h1>welcome back !</h1>
+          </section>
+		      <form class="login" method="post" action="connexion.php">
+				    <input type="text" placeholder="login" name="login" placeholder="login">
+				    <input type="password" placeholder="password" name="password" placeholder="password"><br>
+            <input type="submit" value="Login" value="CONNEXION" name="submit">
+          </form>
 
-                <?php
+          <?php
+          if ((isset($_POST['login'])) && (isset($_POST['password']))){
 
-                if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
-    
-                    echo "
+            if ((!empty($_POST['login'])) && (!empty($_POST['password']))){
 
-                <nav>
-                <ul>
-                    <li><a href='index.php'>Accueil</a></li>
-                    <li><a href='message.php'>Chat</a></li>
-                    <li><a href='profil.php'>Profil</a></li>
-                    <li><a href='logout.php'>Déconnexion</a></li>
-                </ul>
-                </nav>
+            $connect = mysqli_connect('localhost','root','','forum');
 
-                 ";}
-                 elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
-                    
-                    echo "
+            if(! $connect){die("Error  : ". mysql_error());}
 
-                    <nav>
-                    <ul>
-                        <li><a href='index.php'>Accueil</a></li>
-                        <li><a href='message.php'>Chat</a></li>
-                        <li><a href='profil.php'>Profil</a></li>
-                        <li><a href='admin.php'>Admin</a></li>
-                        <li><a href='logout.php'>Déconnexion</a></li>
-                    </ul>
-                    </nav>
-    
-                     ";}
-                else{
-                    echo "
+            $request = "SELECT * FROM utilisateurs WHERE login='$_POST[login]'&&password='$_POST[password]'";
+            $result = mysqli_query($connect, $request);
+            $fetch = mysqli_fetch_assoc($result);
+           
+            if ($result){
 
-                <nav>
-                <ul>
-                    <li><a href='index.php'>Accueil</a></li>
-                    <li><a href='inscription.php'>Inscription</a></li>
-                    <li><a href='connexion.php'>Connexion</a></li>
-                </ul>
-                </nav>
+            $row = mysqli_num_rows($result);
 
-                 ";} ?>
-    
-            </section>
-        </header>
-        <main>
+            if ($row){
+            $_SESSION['login']=$_POST['login'];
+            $login=$_SESSION['login'];
+            $_SESSION['id']=$fetch['id'];
+            $_SESSION['id_droits']=$fetch['id_droits'];
+            
+            
+            header("location:index.php");
+            }
 
-<section class="main-article form-input" id="main-article">
-
-    <form class="form-style" id="form-connexion" method="post" action="">
-    <?php
-
-
-
-if ((isset($_POST['login'])) && (isset($_POST['password'])))
-{
-if ((!empty($_POST['login'])) && (!empty($_POST['password'])))
-{
-
-
-
-    $con = mysqli_connect('localhost','root','','forum');
-
-
-if(! $con){
-	die("Error  : ". mysql_error());
-}
-
-
-$sql = "SELECT * FROM `utilisateurs` WHERE  `login`='$_POST[login]'&&`password`='$_POST[password]'";
-$result = mysqli_query($con, $sql);
-if ($result)
-{
-  $row = mysqli_num_rows($result);
-
-  if ($row)
-    {
-        $query4 = "SELECT * FROM `utilisateurs` WHERE  `login`='$_POST[login]'";
-                        $result4 = mysqli_query($con, $query4);
-                        $value4 = mysqli_fetch_assoc($result4);
-
-                        $_SESSION['id']=$value4['id'];
-
-                        $_SESSION['login']=$value4['login'];
-                
-        header("location:index.php");
-    }else echo "Login ou mot de passe incorrect";
-
-}
-
-}else echo "<span>Veuillez remplir tous les champs</span><br>";
-
-}
-?>
-        <h1>Connexion</h1><br>
-        <label for="login">Login</label><br>
-        <input id="form-text" type="text" name="login" maxlength="10">
-
-        <label for="password">Mot de passe</label><br>
-        <input id="form-text" type="password" name="password" maxlength="12" minlength="6"><br><br>
-
-        <input id="button-valider" type="submit" value="Se connecter" name="submit">
-    </form>
-    </section>
-</main>
-    </body>
+            else echo '</br><span class="errormessage">Login ou mot de passe incorrect</span>';
+            }
+          }else echo '<span class="errormessage">Veuillez remplir tous les champs</span></br>';
+          }
+          ?>
+        </section>
+        <p><a id="linkconnect" href="inscription.php">Pas encore inscrit ? Rejoins-nous maintenant !</a></p>
+      </section>
+    </main>
+    <footer>
+      <?php include("includes/footer.php");?>
+    </footer>
+</body>
 </html>

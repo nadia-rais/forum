@@ -1,126 +1,119 @@
-<?php
-
-session_start();
-
+<?php session_start(); 
+if (isset($_POST["deco"])) {
+    session_unset();
+    session_destroy();
+    header('Location:index.php');
+}
 ?>
 
-
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Chat & Co</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/discussion.css">
-        <link href="https://fonts.googleapis.com/css2?family=Chivo&family=Noto+Sans+JP&display=swap" rel="stylesheet">
-    </head>
+<head>
+    <title>forum - homepage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes"/>
+    <link rel="shortcut icon" type="image/x-icon" href="https://i.ibb.co/8nC21YQ/logo1-wow.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+      <?php include("includes/header.php")?>
+    </header>
+    <main> 
+    <?php 
+        $connect = mysqli_connect('localhost','root','','forum');
 
-    <body>
-        
-        <header>
-            <section>
+        if (isset($_SESSION["login"])){
 
-            <?php
-
-if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
-
-    echo "
-
-<nav>
-<ul>
-    <li><a href='index.php'>Accueil</a></li>
-    <li><a href='message.php'>Chat</a></li>
-    <li><a href='profil.php'>Profil</a></li>
-    <li><a href='logout.php'>Déconnexion</a></li>
-</ul>
-</nav>
-
- ";}
- elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
-    
-    echo "
-
-    <nav>
-    <ul>
-        <li><a href='index.php'>Accueil</a></li>
-        <li><a href='message.php'>Chat</a></li>
-        <li><a href='profil.php'>Profil</a></li>
-        <li><a href='admin.php'>Admin</a></li>
-        <li><a href='logout.php'>Déconnexion</a></li>
-    </ul>
-    </nav>
-
-     ";}
-else{
-    echo "
-
-<nav>
-<ul>
-    <li><a href='index.php'>Accueil</a></li>
-    <li><a href='inscription.php'>Inscription</a></li>
-    <li><a href='connexion.php'>Connexion</a></li>
-</ul>
-</nav>
-
- ";} ?>
-    
+          $request = "SELECT login, pseudo, avatar FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+          $query = mysqli_query($connect, $request);
+          $infos = mysqli_fetch_all($query);
+        ?>
+          <section id="infos">
+            <section id="banner-connect">
+              <h1>vous êtes actuellement connecté <?php echo $_SESSION['login']?></h1> 
             </section>
-        </header>
-
-        <main>
-            <section class="main-article">
-                <div id="titre-banner">
-
-                    
-                    <?php
-
-                    if(isset($_SESSION['login'])){
-                        $con = mysqli_connect('localhost','root','','discussion');
-                        $query = "SELECT `login` FROM `utilisateurs` WHERE  `login`='$_SESSION[login]'";
-                        $result2 = mysqli_query($con, $query);
-                        $value = mysqli_fetch_assoc($result2);
-                        echo "<p>Bonjour ".$value['login']." et bienvenue sur :</p>
-                                <h1 id='titre-co'>Chat & Co</h1>
-                                <h2 id='sous-titre-co'>Venez Discuter !</h2>";
-                    }
-                    else{
-                        echo "<h1 id='titre-no-co'>Chat & Co</h1>
-                                <h2 id='sous-titre-no-co'>Venez Discuter !</h2>";
-                    }
-                    ?>
-                </div>
+            <section id="mini-profile">
+              <img id="minipic" src="<?=$infos[0][2]?>" alt="profilpic" width="100">
+              <p>@ <?=$infos[0][1]?></p>
             </section>
-            <section class="main-article">
-                <div id="art-gauche">
-                    <h3>Se connecter</h3><br>
-                    <p>Accédez à votre espace perso afin de communiquer avec vos amis présents sur le site. </p><br>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/eDz0nmQM3xw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </section>
+  
+      <?php
+        }else{
+      ?>
+      <section id="banner">
+        <section id="principal">
+            <h1> le forum de la communauté world of warcraft!</h1>
+            <img src="https://i.ibb.co/T0XWW6V/logo2-wow.png" alt="logo2-wow">
+            <a href="inscription.php">inscription</a>
+        </section>
+      </section>
+      <?php 
+        }
+      ?> 
 
-                    <form class="bouton-basic"  action=connexion.php>
-                        <input id="buttong" type="submit" value="Se connecter">
-                    </form>
-                </div>
-                <div id="art-droite">
-                    <div>
-                        <h3>Créer un compte</h3><br>
-                        <p>Chat & Co vous permet de chatter avec vos amis !</p><br>
-                    </div>
-                    
-                    
-                    <div class="mini-galerie">
-                        <img src="css/images/chat-1.jpg" alt="Chat screen">
-                        <img src="css/images/chat-2.jpg" alt="Chat screen">
-                        <img src="css/images/chat-3.png" alt="Chat screen">
-                        <br><br>
-                    </div>
-                    
-                    <div>
-                        <form class="bouton-basic" action=inscription.php>
-                        <input id="buttond" type="submit" value="S'inscrire">
-                        </form>
-                    </div>
-                    
-                </div>
+      <section id="topics">
+        <section class="topics">
+        <h2>TOPICS</h2>
+        <hr>
+
+        <?php
+          
+          $db = mysqli_connect("localhost","root","","forum");
+          $request_topic="SELECT * FROM topic as T INNER JOIN utilisateurs as U ON T.id_utilisateur=U.id ORDER BY T.id_topic desc LIMIT 4";
+          $query_topic=mysqli_query($db,$request_topic);
+
+          if(mysqli_num_rows($query_topic)==0){
+            echo "<p>Pas de Topic.</p><br>";
+          }
+
+          else{
+
+            while($value=mysqli_fetch_assoc($query_topic)){
+  
+                echo "<div id='topic-text'><p id='date'> Posté le : ".$value['date']."</p>";
+                echo "<h3><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a><h3></div>";
+            }
+
+          }
+          
+         if($value['id_droits']==2 || $value['id_droits']==3){
+
+            echo "<form action='ajout_topic.php' method='POST'>
+                  <input id='button-valider' type='submit' value='Ajouter un Topic' name='submit'>
+                  </form>";
+         }
+
+          
+        ?>
+          <section id="sub-topics">
+
+            <section id="top-comment">
+              <div id="top-comment-title">TOP-COMMENTS</div>
+              <div>
+                <p>boucle pour mettre les top comments avec le plus de like </P>
+                <p>posté le ..... par </P>
+              </div>
+              <div>
+                <p>posté le ..... par </P>
+              </div>
+              <div>
+                <p>posté le ..... par </P>
+              </div>
             </section>
-        </main>
 
-    </body>
+          <section>
+
+        </section>
+      </section> 
+    </main>
+    <footer>
+      <?php include("includes/footer.php")?>
+    </footer>
+</body>
 </html>
+
+
+

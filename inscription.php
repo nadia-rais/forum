@@ -1,154 +1,95 @@
-<?php
+<?php session_start();?>
 
-session_start();
-
-?>
-
-
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Inscription</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/discussion.css">
-        <link href="https://fonts.googleapis.com/css2?family=Chivo&family=Noto+Sans+JP&display=swap" rel="stylesheet">
-    </head>
-
-    <body>
-        
+<head>
+    <title>forum - inscription</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes"/>
+    <link rel="shortcut icon" type="image/x-icon" href="https://i.ibb.co/8nC21YQ/logo1-wow.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
     <header>
-            <section>
-
-            <?php
-
-if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
-
-    echo "
-<nav>
-<ul>
-    <li><a href='index.php'>Accueil</a></li>
-    <li><a href='message.php'>Chat</a></li>
-    <li><a href='profil.php'>Profil</a></li>
-    <li><a href='logout.php'>Déconnexion</a></li>
-</ul>
-</nav>
- ";}
- elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
-    
-    echo "
-    <nav>
-    <ul>
-        <li><a href='index.php'>Accueil</a></li>
-        <li><a href='message.php'>Chat</a></li>
-        <li><a href='profil.php'>Profil</a></li>
-        <li><a href='admin.php'>Admin</a></li>
-        <li><a href='logout.php'>Déconnexion</a></li>
-    </ul>
-    </nav>
-     ";}
-else{
-    echo "
-<nav>
-<ul>
-    <li><a href='index.php'>Accueil</a></li>
-    <li><a href='inscription.php'>Inscription</a></li>
-    <li><a href='connexion.php'>Connexion</a></li>
-</ul>
-</nav>
- ";} ?>
-    
+      <?php include("includes/header.php");?>
+    </header>
+    <main>
+    <section id="container-insc">
+        <section id="diapo">
+            <h2>bienvenue dans le</h2>
+            <ul class="slideshow1">
+	            <li><span><div class="principal1"></div></span></li>
+                <li><span><div class="principal1"></div></span></li>
+	            <li><span><div class="principal1"></div></span></li>
+	            <li><span><div class="principal1"></div></span></li>
+	            <li><span><div class="principal1"></div></span></li>
+            </ul>
+            <h1> WOW'S CLAN</h1>
+        </section>
+        
+        <form action="" method="post">
+            <section id="form-insc">
+                <h1> crée ton profil maintenant </h1>
+                <label>email</label>
+                <input type="email" id="email" name="email" size="30" required>
+                <label>choississez un pseudo</label>
+                <input type="text" id="pseudo" name="pseudo" required>
+                <label>login</label>
+                <input type="text" name="login" required>
+                <label>password</label>
+                <input type="password" name="password" required>
+                <label>confirmation password</label>
+                <input type="password" name="passwordrepeat" required>
+                <input type="submit" value="s'inscrire" name="submit">
             </section>
-        </header>
-        <main>
 
-<section class="main-article form-input" id="main-article">
+                <?php 
 
-<form class="form-style" id="form-inscri" method="post" action="inscription.php">
-<?php
+                    if (isset($_POST['submit'])) {
+                    
+                    $login = ($_POST['login']);
+                    $pseudo = ($_POST['pseudo']);
+                    $mail = ($_POST['email']);
+                    $password = ($_POST['password']);
+                    $repeatpassword = ($_POST['passwordrepeat']);
 
-if(isset($_POST['captcha'])){
-    if($_POST['captcha']==$_SESSION['code']){
+                    $profiledefault = ("https://i.ibb.co/mG6M0f5/empty-profile-picture.jpg"); //variable pour insérer une photo de profil par défaut à l'inscription
+                    $droits = 1;                                                              //variable pour insérer les droits par défaut à l'inscription
 
+                    $connect = mysqli_connect('localhost', 'root', '','forum');
+                    $request = "SELECT login FROM utilisateurs WHERE login = '$login'" ;
+                    $req = mysqli_query($connect,$request);
+                    $exist = mysqli_fetch_all($req);
 
-if ((isset($_POST['login'])) && (isset($_POST['email'])) && (isset($_POST['password'])) && (isset($_POST['conpassword'])))
-{
-if ((!empty($_POST['login'])) && (!empty($_POST['email'])) && (!empty($_POST['password'])) && (!empty($_POST['conpassword'])))
-{
+                        if (!empty($exist)){
 
+                        echo "<p class='errormessage'> Login est déjà utilisé !</p>";
 
-if (($_POST['password']) == ($_POST['conpassword'])){
+                        } 
 
-	$con = mysqli_connect('localhost','root','');
+                        elseif ($pseudo && $mail && $login && $password && $repeatpassword ){ 
 
+                            if ($password == $repeatpassword) {
+      
+                            $requete = "INSERT INTO `utilisateurs`(`login`, `pseudo`, `password`, `email`, `id_droits`, `avatar`, `date`) VALUES ('$login','$pseudo','$password','$mail','$droits','$profiledefault', NOW())";
+                            $query = mysqli_query($connect, $requete);
+                            var_dump($query);
 
-if(! $con){
-	die("Error  : ". mysql_error());
-}
+                            header('location:connexion.php');
+                
+                            } else echo '<p class="error-connect">Les mots de passe doivent être identiques</p>';
+            
+                        } else echo '<p class="error-connect">Veuillez saisir tous les champs</p>';
+                    } 
+          
+                ?>
+        </form>
 
-mysqli_select_db($con,'forum');
-
-$sql_query = "SELECT `login` FROM `utilisateurs` WHERE login='$_POST[login]'";
-$result = mysqli_query($con,$sql_query);
-$login=$_POST['login'];
-
-if(mysqli_num_rows($result) > 0){
-    echo 'Un membre portant le login ' . $login . ' existe déjà!';
-}
-
-else{
-
-$sql = "INSERT INTO `utilisateurs`(`login`, `password`, `email`, `id_droits`) VALUES('$_POST[login]','$_POST[password]','$_POST[email]',1)";
-
-if (!mysqli_query($con,$sql))
-{
-	die("Impossible d'ajouter cet enregistrement : " . mysql_error());
-}
-
-
-header("location:connexion.php");
-}
-mysqli_close($con);
-
-
-}else echo "<span>Les mots de passe doivent être identiques</span> <br>";
-
-}else echo "<span>Veuillez saisir tous les champs</span> <br>";
-
-
-}
-
-} else {
-    echo "Code incorrect";
-}
-}
-
-
-
-
-
-?>
-<h1>Inscription</h1><br>
-
-<label for="login">Votre email<span>*</span> :</label><br>
-<input id="form-text" type="email" name="email"  maxlength="15" minlength="6">
-
-<label for="login">Votre Login<span>*</span> :</label><br>
-<input id="form-text" type="text" name="login"  maxlength="10">
-    
-<label for="password">Votre mot de passe<span>*</span> :</label><br>
-<input id="form-text" type="password" name="password" maxlength="12" minlength="6">
-
-<label for="conpassword">Confirmer votre mot de passe<span>*</span> :</label><br>
-<input id="form-text" type="password" name="conpassword" maxlength="12" minlength="6">
-
-<br><br>
-
-<input type="text" placeholder="Entrez ici le CAPTCHA pour valider le formulaire" name="captcha"/>
-<input type="submit" name="submit"/>
-    <img id="captcha-img" src="captcha.php" onclick="this.src='captcha.php?' + Math.random();" alt="captcha" style="cursor:pointer;">
-</form>
-</section>
+        </section>
     </main>
-
-        </body>
-
+    <footer>
+        <?php include("includes/footer.php"); ?>
+    </footer>
+</body>
 </html>
