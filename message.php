@@ -1,90 +1,46 @@
 <?php
-
 session_start();
+// if(isset($_SESSION['login'])){
 
-if(!isset($_SESSION['login'])){
-    header("location:connexion.php");
-}
-
-else{
 ?>
-
-
-
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Chat & Co</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/discussion.css">
-        <link href="https://fonts.googleapis.com/css2?family=Chivo&family=Noto+Sans+JP&display=swap" rel="stylesheet">
-    </head>
+<head>
+    <title>forum - topic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes"/>
+    <link rel="shortcut icon" type="image/x-icon" href="https://i.ibb.co/8nC21YQ/logo1-wow.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+       <?php include("includes/header.php"); ?>
+    </header>
+    <main>
 
-    <body>
-        
-        <header>
-            <section>
+    <?php 
+    
+      $db = mysqli_connect("localhost","root","","forum");
+      $request="SELECT * FROM messages as M INNER JOIN utilisateurs as U ON M.id_utilisateur=U.id INNER JOIN conversation as C ON M.id_conversation=C.id_conversation WHERE M.id_conversation=".$_GET['id_conversation']." ORDER BY M.id_message";
+      $query=mysqli_query($db,$request);
 
-            <?php
 
-<<<<<<< Updated upstream
-if(isset($_SESSION['login']) && ($_SESSION['login']!='admin')) {
-=======
       $request1="SELECT id FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
       $query1=mysqli_query($db,$request1);
       $infos = mysqli_fetch_all($query1);
       
       $iduser= $infos[0][0];
->>>>>>> Stashed changes
+      var_dump($iduser);
 
-    echo "
+      echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>".$_GET['msg_conv']."</th></thead><tbody>";
 
-<<<<<<< Updated upstream
-<nav>
-<ul>
-    <li><a href='index.php'>Accueil</a></li>
-    <li><a href='message.php'>Chat</a></li>
-    <li><a href='profil.php'>Profil</a></li>
-    <li><a href='logout.php'>Déconnexion</a></li>
-</ul>
-</nav>
-
- ";}
- elseif(isset($_SESSION['login']) && ($_SESSION['login']=='admin')) {
-    
-    echo "
-
-    <nav>
-    <ul>
-        <li><a href='index.php'>Accueil</a></li>
-        <li><a href='message.php'>Chat</a></li>
-        <li><a href='profil.php'>Profil</a></li>
-        <li><a href='admin.php'>Admin</a></li>
-        <li><a href='logout.php'>Déconnexion</a></li>
-    </ul>
-    </nav>
-
-     ";}
-else{
-    echo "
-
-<nav>
-<ul>
-    <li><a href='index.php'>Accueil</a></li>
-    <li><a href='inscription.php'>Inscription</a></li>
-    <li><a href='connexion.php'>Connexion</a></li>
-</ul>
-</nav>
-
- ";} ?>
-    
-            </section>
-        </header>
-=======
       if(mysqli_num_rows($query)==0){
         
         echo "<tr><td colspan='2' id='thead-text'>Pas de messages dans cette Conversation.</td><tr>";
       }
-// SIGNALER
+
+      // SIGNALER
       if(isset($_POST['reportbutton'])){
 
         $id=$_POST['id'];
@@ -100,16 +56,14 @@ else{
         header("location:signalement-message.php");
 
     }
-//
+
       while($value=mysqli_fetch_assoc($query)){
         
->>>>>>> Stashed changes
 
-        <main id='main-chat-test'>
+          $idmessage=$value['id_message'];
+          //var_dump($idmessage);
+        
 
-<<<<<<< Updated upstream
-        <section class="main-article" id="main-article-chat">
-=======
              //on compte tous les likes pour les afficher à côté de l'icone like pour chaque message
               $requestcountlikes = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage AND reaction = 1 ";
               $query_a = mysqli_query($db, $requestcountlikes);
@@ -124,97 +78,90 @@ else{
               $requestcountlikesbyid = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage  AND id_utilisateur = $iduser AND reaction = 1";
               $query_c = mysqli_query($db, $requestcountlikesbyid);
               $countlikesbyid = mysqli_fetch_all($query_c);
+              var_dump($countlikesbyid);
 
             //on compte toutes les entrées likes effectuées par l'utilisateur pour un message
               $requestcountbyid = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1 ";
               $query_d = mysqli_query($db, $requestcountbyid);
               $countdislikesbyid = mysqli_fetch_all($query_d);
->>>>>>> Stashed changes
         
-        <?php
+            echo "<tr><td id='left-livre'><img id='minipic2' src=".$value['avatar']." alr='profilpic'<p>".$value['id_message'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a>  le : ".$value['date_msg']."</td>";
+            echo "<td id='right-livre'>".$value['message']. "</td>";
 
-                if(isset($_POST['message'])){
+            echo "  <form method='post' action =''>
+            <td><input id='button_report' type='submit' value='Signaler' name='reportbutton'></td>
+            <td><input type='hidden' name='id' value='$value[id_message]'></form></td>";
 
-<<<<<<< Updated upstream
-                    $db = mysqli_connect("localhost","root","","forum");
-=======
-                   echo " <form method='post' action =''>
-                   <td><input id='button_report' type='submit' value='Signaler' name='reportbutton'></td>
-                   <td>  <input type='hidden' name='id' value='$value[id_message]'></form></td>";
+
+            echo '<td><form action="" method="POST">
+                    <input type="submit" name="like" id="likebutton" value="' . $idmessage . '"/></form>
+                 
+                  <td><form action="" method="POST">
+                    <input type="submit" name="dislike" id="dislikebutton" value="' . $idmessage . '"/></form>
+                   </td>';
+
+                   
 
             echo '<td><p>' .$countlikes[0][0].' &nbsp; people like this</p></td>';
             echo '<td><p>' .$countdislikes[0][0].' &nbsp; people dislike this</p></td></tr>';
->>>>>>> Stashed changes
 
-                    $request="SELECT id FROM utilisateurs WHERE login='$_SESSION[login]'";
-                    $query=mysqli_query($db,$request);
-                    $value=mysqli_fetch_assoc($query);
-                    $comm=addslashes($_POST['message']);
-
-                    $dateM=date('Y/m/d H:i:s');
-
-                    $request2="INSERT INTO `messages`(`message`, `date`,`id_utilisateur`) VALUES ('$comm','$dateM',$value[id])";
-                    $query2=mysqli_query($db,$request2);
-                    header("location:message.php");
-                }
-
-                $db3 = mysqli_connect("localhost","root","","forum");
-
-                $request3="SELECT M.message,M.date,U.login,M.id FROM messages as M INNER JOIN utilisateurs as U ON M.id_utilisateur=U.id ORDER BY M.id";
-                $query3=mysqli_query($db3,$request3);
-
-                if(isset($_POST['reportbutton'])){
-
-                    $id=$_POST['id'];
-
-                    $db = mysqli_connect("localhost","root","","forum");
-
-                    $_SESSION['messageid']=$id;
-                                   
-
-                    $request5="SELECT FROM `messages` WHERE id = $id";
-                    $query5=mysqli_query($db,$request5);
-
-                    header("location:signalement-form.php");
-
-                }
-                
-                echo "<table id='table-livre'><thead><th colspan='3' id='thead-txt'>Chattez ici !</th></thead><tbody>";
-
-                while($value=mysqli_fetch_assoc($query3)){
-
-
-                    echo "<tr><td id='left-livre'><p>Posté le : <p>".$value["date"]."<p> par </p><p>".$value["login"]."</p></td>";
-                    echo "<td id='middle-livre'><p>".$value["message"]."</p></td><td id='right-livre'>";
+            if (isset($_POST["like"])){
     
+              if ($countlikesbyid[0][0]== "0" && $_POST["like"] == $idmessage){
+                
+            
+              $requestlike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', 1)";
+              $querylike = mysqli_query($db, $requestlike);
+    
+              }
+            
+            }
 
-                        echo "  <form method='post' action =''>
-                                <input id='button_report' type='submit' value='Signaler' name='reportbutton'>
-                                <input type='hidden' name='id' value='$value[id]'></form>";
+            if (isset($_POST["dislike"])){
+    
+              if ($countdislikesbyid[0][0]== "0" && $_POST["dislike"] == $idmessage){
+                
+            
+              $requestdislike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', -1)";
+              $querydislike = mysqli_query($db, $requestdislike);
+    
+              }
+            
+            }
 
-                    
-                    
-                    echo "</td></tr>";
-                }
+          }
+       
+        echo "</tbody></table>";
 
-                echo "</tbody></table>";
 
+        if(isset($_POST['submit_msg'])){
+          $request2="INSERT INTO `messages`(`message`, `id_utilisateur`, `id_conversation`, `date_msg`) VALUES ('".$_POST['msg_conv']."','$_SESSION[id]','".$_GET['id_conversation']."', NOW())";
+          $query2=mysqli_query($db,$request2);
+          header("location:message.php?id_conversation=".$_GET['id_conversation']."&msg_conv=".$_GET['msg_conv']);
+      }
+
+        echo "<form id='modification1' method='POST'><h1>Nouveau message</h1><br>
+        <input id='form-text' type='text' name='msg_conv' required>
         
+        <br><br>
+        
+        <input id='button-valider' type='submit' name='submit_msg' value='Valider'>
+        </form>";
 
-                ?>
+      
+    ?>
 
-        <form class="form-style" id="form-chat" method="POST">
-
-        <h1>Votre message :</h1>
-        <textarea id="form-text" placeholder="Votre message ici" name="message"></textarea>
-
-        <input id="button-valider" type="submit" value="Ajouter le message" name="submit">
-        </form>
-        </section>
-        </main>
-        </body>
+    </main>
+    <footer>
+      <?php include("includes/footer.php"); ?>
+    </footer>
+</body>
 </html>
 
 <?php
-}
+// }
+
+// else{
+//   header("location:index.php");
+// }
 ?>
