@@ -36,7 +36,7 @@ if (isset($_SESSION["login"])){
          <div class="profile-card">
           <div class="top-section">
             <div class="pic">
-              <img src="<?=$members [0][6]?>" alt="profilpic" width="100">
+              <img src="<?=$members [0][7]?>" alt="profilpic" width="100">
             </div>
             <div class="name"></div>
             <div class="tag"><p>@<?=$members [0][1]?></p></div>
@@ -50,9 +50,9 @@ if (isset($_SESSION["login"])){
             </div>
             <div>echo nb<span>messages postés</span></div>
             <div class="border"></div>
-            <div class="views"><?=$members [0][7]?><span>niveau</span></div>      
+            <div class="views"><?=$members [0][0]?><span>niveau</span></div>      
             <div class="border"></div>
-            <p id="date">inscrit depuis le <?=$members[0][8]?></p>
+            <p id="date">inscrit depuis le <?=$members[0][7]?></p>
           
           </div>
         </div>

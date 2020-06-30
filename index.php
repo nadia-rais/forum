@@ -26,7 +26,7 @@ if (isset($_POST["deco"])) {
 
         if (isset($_SESSION["login"])){
 
-          $request = "SELECT login, pseudo, avatar, statut FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+          $request = "SELECT login, pseudo, avatar FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
           $query = mysqli_query($connect, $request);
           $infos = mysqli_fetch_all($query);
         ?>
@@ -39,7 +39,6 @@ if (isset($_POST["deco"])) {
               <p>@ <?=$infos[0][1]?></p>
             </section>
           </section>
-         
   
       <?php
         }else{
@@ -72,48 +71,24 @@ if (isset($_POST["deco"])) {
 
           else{
 
-            echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>Les Topics</th></thead><tbody>";
-
             while($value=mysqli_fetch_assoc($query_topic)){
   
-                echo "<tr><td id='left-livre'><p>".$value['id_topic'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a> le : ".$value['date']."</td>";
-                echo "<td id='right-livre'><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a></td></tr>";
+                echo "<div id='topic-text'><p id='date'> Posté le : ".$value['date']."</p>";
+                echo "<h3><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a><h3></div>";
             }
-  
-            echo "</tbody></table>";
 
           }
           
-
-          // if($value['id_droits']==2 || $value['id_droits']==3){
+         if($value['id_droits']==2 || $value['id_droits']==3){
 
             echo "<form action='ajout_topic.php' method='POST'>
                   <input id='button-valider' type='submit' value='Ajouter un Topic' name='submit'>
                   </form>";
-          // }
+         }
 
           
         ?>
           <section id="sub-topics">
-
-            <section id="sub">
-              <div class="topic-text">
-                <h3>CATEGORIE</h3>
-                <p>lorem ipsum dolor</p>
-              </div>
-              <div class="topic-text">
-                <h3>CATEGORIE</h3>
-                <p>lorem ipsum dolor</p>
-              </div>
-              <div class="topic-text">
-                <h3>CATEGORIE</h3>
-                <p>lorem ipsum dolor</p>
-              </div>
-              <div class="topic-text">
-                <h3>CATEGORIE</h3>
-                <p>lorem ipsum dolor</p>
-              </div>
-            </section>
 
             <section id="top-comment">
               <div id="top-comment-title">TOP-COMMENTS</div>
@@ -139,5 +114,6 @@ if (isset($_POST["deco"])) {
     </footer>
 </body>
 </html>
+
 
 
