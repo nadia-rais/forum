@@ -1,6 +1,6 @@
 <?php
 session_start();
-// if(isset($_SESSION['login'])){
+if(isset($_SESSION['login'])){
 
 ?>
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ session_start();
       $iduser= $infos[0][0];
       var_dump($iduser);
 
-      echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>".$_GET['msg_conv']."</th></thead><tbody>";
+      echo "<table id='table-conv'><thead><th colspan='2' id='thead-txt'>".$_GET['msg_conv']."</th></thead><tbody>";
 
       if(mysqli_num_rows($query)==0){
         
@@ -57,57 +57,100 @@ session_start();
               $query_b = mysqli_query($db, $requestcountdislikes);
               $countdislikes = mysqli_fetch_all($query_b);
 
-            //on compte toutes les entrées likes effectuées par l'utilisateur pour un message
+            //on compte toutes les  likes effectuées par l'utilisateur connecté pour un idmessage
               $requestcountlikesbyid = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage  AND id_utilisateur = $iduser AND reaction = 1";
               $query_c = mysqli_query($db, $requestcountlikesbyid);
               $countlikesbyid = mysqli_fetch_all($query_c);
               var_dump($countlikesbyid);
 
-            //on compte toutes les entrées likes effectuées par l'utilisateur pour un message
+            //on compte toutes les  dislikes effectuées par l'utilisateur connecté pour un idmessage
               $requestcountbyid = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1 ";
               $query_d = mysqli_query($db, $requestcountbyid);
               $countdislikesbyid = mysqli_fetch_all($query_d);
         
             echo "<tr><td id='left-livre'><img id='minipic2' src=".$value['avatar']." alr='profilpic'<p>".$value['id_message'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a>  le : ".$value['date_msg']."</td>";
             echo "<td id='right-livre'>".$value['message']. "</td>";
-            echo '<td><form action="" method="POST">
-                    <input type="submit" name="like" id="likebutton" value="' . $idmessage . '"/></form>
+            echo '<td><div class="thumb"><form action="" method="POST">
+                    <input type="submit" name="like" id="likebutton" value="' . $idmessage . '"/>
+                    <p class="count">'.$countlikes[0][0].' &nbsp; people like this</p>
+                    
+                    </form></div>
                  
 
-                  <td><form action="" method="POST">
-                    <input type="submit" name="dislike" id="dislikebutton" value="' . $idmessage . '"/></form>
+                  <div class="thumb"><form action="" method="POST">
+                    <input type="submit" name="dislike" id="dislikebutton" value="' . $idmessage . '"/>
+                    <p class="count">' .$countdislikes[0][0].' &nbsp; people dislike this</p>
+
+                   <form method="post" action ="">
+                    <input id="button_report" type="submit" value="Signaler" name="reportbutton">
+                    <input type="hidden" name="id" value="'.$value['id'].'"></form>";
+                    </form></div>
                    </td>';
 
-            echo '<td><p>' .$countlikes[0][0].' &nbsp; people like this</p></td>';
-            echo '<td><p>' .$countdislikes[0][0].' &nbsp; people dislike this</p></td></tr>';
+
+                   if(isset($_POST['reportbutton'])){
+
+                    $id=$_POST['id'];
+
+                    $db = mysqli_connect("localhost","root","","forum");
+
+                    $_SESSION['messageid']=$id;
+                                   
+
+                    $request5="SELECT FROM `messages` WHERE id = $id";
+                    $query5=mysqli_query($db,$request5);
+
+                    header("location:signalement-form.php");
+
+                }
+
 
             if (isset($_POST["like"])){
     
-              if ($countlikesbyid[0][0]== "0" && $_POST["like"] == $idmessage){
+              if ($countlikesbyid[0][0]== "0" && $_POST["like"] == $idmessage && $countdislikesbyid[0][0]== "0"){
+
+                if($countlikesbyid[0][0]== "0" && $_POST["like"] == $idmessage && $countdislikesbyid[0][0]== "1"){
+
+                  $likeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1";
+                  $querylikeannul = mysqli_query($db, $likeannul); // permet d'annuler le like si l'utilisateur clique sur dislike 
+    
+                }
                 
-            
               $requestlike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', 1)";
               $querylike = mysqli_query($db, $requestlike);
     
               }
+
+              else echo'vous avez deja réagi à ce  post';
+              
             
             }
 
             if (isset($_POST["dislike"])){
     
-              if ($countdislikesbyid[0][0]== "0" && $_POST["dislike"] == $idmessage){
-                
-            
+              if ($countdislikesbyid[0][0]== "0" && $_POST["dislike"] == $idmessage && $countdislikesbyid[0][0]== "0"){
+
+                if($countdislikesbyid[0][0]== "0" && $_POST["dislike"] == $idmessage && $countlikesbyid[0][0]== "1"){
+
+                  $dislikeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = 1";
+                  $querydislikeannul = mysqli_query($db, $dislikeannul); // permet d'annuler le dislike si l'utilisateur clique sur like 
+    
+                  }
+  
               $requestdislike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', -1)";
               $querydislike = mysqli_query($db, $requestdislike);
     
               }
+
+              else echo'vous avez deja réagi à ce  post';
+
             
             }
 
           }
        
         echo "</tbody></table>";
+
 
 
         if(isset($_POST['submit_msg'])){
@@ -135,9 +178,9 @@ session_start();
 </html>
 
 <?php
-// }
+ }
 
-// else{
-//   header("location:index.php");
-// }
+ else{
+ header("location:index.php");
+ }
 ?>
