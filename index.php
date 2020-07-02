@@ -80,14 +80,6 @@ if (isset($_POST["deco"])) {
 
           }
           
-         if($value['id_droits']==2 || $value['id_droits']==3){
-
-            echo "<form action='ajout_topic.php' method='POST'>
-                  <input id='button-valider' type='submit' value='Ajouter un Topic' name='submit'>
-                  </form>";
-         }
-
-          
         ?>
       </section> 
     </main>

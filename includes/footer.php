@@ -86,7 +86,6 @@
         else {
           $request = "INSERT INTO newsletter (email) VALUES ('$email')";
           $query = mysqli_query($connect, $request);
-          header("location:index.php");
 
           echo '<p class="newsmessage">votre email a bien été enregistré</p>';
         }

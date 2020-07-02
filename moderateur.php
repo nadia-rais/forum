@@ -24,7 +24,6 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
 
     <?php
 
-      //if(!isset($_POST['submit_mod_conv'], $_POST['submit_mod_msg'], $_POST['submit_mod_auto'])){
       echo "<form id='onglet' method='POST'>
       <input type='submit' name='submit_mod_conv' value='Conversations Signalées'>
       <input type='hidden' name='mod_conv' value='1'>
@@ -35,7 +34,6 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
       <input type='submit' name='submit_mod_news' value='Liste Newsletter'>
       <input type='hidden' name='news' value='3'>
       </form>";
-      //}
 
       if(isset($_POST['submit_mod_conv'])){
         $db=mysqli_connect("localhost","root","","forum");
