@@ -10,7 +10,6 @@
  text-decoration: none;
 }
 
-
 body{
  width: 100%;
 }
@@ -281,6 +280,7 @@ footer a:hover{
 @media (max-width: 780px) {
  nav{
    flex-direction: column;
+   align-items: center;
  }
 
  #nav__links{
@@ -296,6 +296,10 @@ footer a:hover{
 
  #deco{
    font-size: 11px;
+ }
+
+ #log{
+   margin:0;
  }
 
  footer{
@@ -404,11 +408,20 @@ footer a:hover{
  border: 1px solid #057CB3;
 }
 
+#topic-text a{
+  color: #010917;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+ }
+
 #topic-text:hover{
   background-color: #057CB3;
   border: 1px solid blue;
   color: goldenrod;
+  transition: 1.5s;
  }
+
+
 
 #date{
   display: flex;
@@ -520,6 +533,10 @@ footer a:hover{
  #principal a{
    font-size: 15px;
  }
+
+ #topic-text{
+  width: 100%;
+ }
  
 }
 
@@ -529,8 +546,6 @@ footer a:hover{
 @media screen and (max-width:500px){
  
 }
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/*** TOPICS ***/
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -666,7 +681,6 @@ footer a:hover{
    background-image: url('background/wow13copie.jpg');
  }
 }
-
 
 .slideshow1 {
  list-style-type: none;
@@ -904,7 +918,8 @@ footer a:hover{
 .errormessage{
  display: flex;
  font-family: 'Exo', sans-serif;
- color: white;
+ color: #057CB3;
+ padding-top: 1.5%;
 }
 
 /***RESPONSIVE CONNEXION***/
@@ -1273,7 +1288,6 @@ footer a:hover{
  font-size: 12px;
 }
 
-
 /*** PROFIL RESPONSIVE ***/
 @media (max-width: 980px) {
  #profile-content{
@@ -1432,18 +1446,6 @@ footer a:hover{
    text-align: center;
  }
  
-
-}
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/*** MODERATEUR ***/
-
-
-/*** RESPONSIVE MODERATEUR***/
-
-@media screen and (max-width:640px) {
 
 }
 
@@ -1694,15 +1696,161 @@ td a{
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*** MESSAGE ***/
 
+#table-conv {
+  width: 90%;
+  overflow: scroll;
+  position: static;
+  border-radius: 10px;
+  color: #110D57;
+  display: inline-block;
+  box-shadow:0 10px 40px rgba(0,0,0,0.08);
+ }
+
+.count{
+  display: flex;
+  font-size: 8px;
+  width: 30%;
+}
+
+.thumb{
+  display: flex;
+  flex-direction: column;
+}
+
+#message-box{
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+  border:1px solid goldenrod;
+}
+
+#id-box{
+  display: flex;
+  background-color:whitesmoke;
+  border-bottom:0.5px solid goldenrod;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  width: 100%;
+}
+
+#text-box{
+  display: flex;
+  background-color: whitesmoke;
+  height: 7vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#like-box{
+  display: flex;
+  background-color: whitesmoke;
+  padding-bottom: 5px;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#sublike-box{
+  display: flex;
+  width: 25%;
+  align-items: center;
+  justify-content: center;
+}
+
+#post-message{
+  display: flex;
+  background-color: goldenrod;
+  justify-content: space-evenly;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-items: center;
+  color: #031128;
+  width: 90%;
+  margin-bottom: 2.5%;
+}
+
+#post-message h1{
+  font-size: 16px;
+}
+
+#pseudo{
+  display: flex;
+  color: #031128;
+  font-size: 13px;
+}
+
+#msg_conv input[type=text]{
+ padding-top: 10px;
+ padding-bottom: 10px;
+ padding-left: 5px;
+ border: none;
+ border-radius: 4px;
+}
+
+#msg_conv input[type=submit]{
+  background: #fff;
+  border: 1px solid goldenrod;
+  cursor: pointer;
+  border-radius: 4px;
+  color: goldenrod;
+  font-family: 'Exo', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 7.5px;
+ }
+
+ #signaler input[type=submit]{
+  background:whitesmoke;
+  border: none;
+  cursor: pointer;
+  color:red;
+  font-family: 'Exo', sans-serif;
+  font-size: 8px;
+  font-weight: 400;
+  padding: 7.5px;
+  margin-left: -10%;
+ }
+
 
 /*** RESPONSIVE MESSAGE***/
 
-@media screen and (max-width:640px) {
+@media screen and (max-width:980px) {
+
+  #sublike-box{
+    width: 60%;
+  }
+
+  #msg_conv input[type=text]{
+    width: 70%;
+    margin-left: 3.5%;
+   }
+
+   #post-message{
+     flex-direction: column;
+     align-items: center;
+   }
+
+  #post-message h1{
+    font-size: 12px;
+    padding-bottom: 1.5%;
+  }
 
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*** CONVERSATION ***/
+
+#no-text{
+  color: #057CB3;
+  display: flex;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
+  width: 70%;
+}
 
 
 /*** RESPONSIVE CONVERSATION***/
@@ -1714,12 +1862,37 @@ td a{
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*** TOPIC ***/
 
+#page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color:#031128;
+  font-family: 'Roboto', sans-serif;
+  min-height: 70vh;
+}
+
+
+#page-title{
+  display: flex;
+  border: 1px solid goldenrod;
+  width: 90%;
+  justify-content: center;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  color: goldenrod;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 18px;
+  position: sticky;
+}
+
 #modification1{
   width: 40%;
   overflow: hidden;
   text-align: center;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   height: 30vh;
@@ -1752,12 +1925,188 @@ td a{
   transition: 1s;
  
  }
+
+#container-table{
+  display: flex;
+  justify-content: center;
+  padding-top: 2.5%;
+  padding-bottom: 2.5%;
+  background-color: whitesmoke;
+}
+#table-topic {
+  width: 90%;
+  overflow: scroll;
+  position: static;
+  border-radius: 10px;
+  color: #110D57;
+  display: inline-block;
+  box-shadow:0 10px 40px rgba(0,0,0,0.08);
+ }
+
+.desc{
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2.5%;
+}
+
+.desc a{
+  color: goldenrod;
+  font-size: 25px;
+}
+
+.desc a:hover{
+  color:#057CB3;
+  transition: 1s;
+}
+
+#table-topic td {
+  border-bottom: 1px solid #FFF;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  }
+
+#container-formtopic{
+  display: flex;
+  align-items: center;
+  min-height: 70vh;
+}
+
+#container-formtopic H1{
+ color: goldenrod;
+ font-family: 'Roboto', sans-serif;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+}
+
+#modification1 input[type=text]{
+  width: 50%;
+  height: 20px;
+  background: transparent;
+  border: 1px solid #057CB3;
+  cursor: pointer;
+  border-radius: 2px;
+  color: goldenrod;
+  font-family: 'Exo', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 4px;
+  margin-bottom: 2.5%;
+}
+
+#modification1 input[type=submit]{
+  height: 35px;
+  background: #fff;
+  border: 1px solid goldenrod;
+  cursor: pointer;
+  border-radius: 2px;
+  color: goldenrod;
+  font-family: 'Exo', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 4px;
+  width: 30%;
+}
+
+#modification1 input[type=submit]:hover{
+  background-color:#031128;
+  color: #fff;
+  transition: 1s;
+}
+
+#modification1 label{
+  font-size: 16px;
+  font-family: 'Exo', sans-serif;
+  color: goldenrod;
+}
+
+#topic-text1{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 90%;
+  background-color: #FEC30A;
+  opacity: 0.6;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 1.5%;
+  border: 1px solid #057CB3;
+ }
  
+ #topic-text1 a{
+   color: #057CB3;
+   text-transform: uppercase;
+   letter-spacing: 1.5px;
+  }
+ 
+ #topic-text1:hover{
+   background-color: white;
+   border: 1px solid blue;
+   color: goldenrod;
+   transition: 1.5s;
+  }
 
+  #add-button{
+    display: flex;
+    margin-top: 2.5%;
+    height: 35px;
+    width: 90%;
+    background: #fff;
+    border: 1px solid goldenrod;
+    cursor: pointer;
+    border-radius: 2px;
+    color: goldenrod;
+    font-family: 'Exo', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+  }
 
+  #add-button input[type=submit]{
+    display: flex;
+    background:none;
+    border:none;
+    cursor: pointer;
+    border-radius: 2px;
+    color: goldenrod;
+    font-family: 'Exo', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 4px;
+
+  }
+
+  #add-button:hover{
+    background-color: black;
+    color: gold;
+    transition: 1s;
+  }
+
+  #infos-box{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    align-items:center;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  #name-conv{
+    display: flex;
+    width: 70%;
+    justify-content: center;
+  }
+  
 /*** RESPONSIVE CATEGORIE***/
 
 @media screen and (max-width:640px) {
+  #modification1{
+    width: 90%;
+    margin-left: 5%;
+   }
 
 }
 
@@ -1805,4 +2154,40 @@ td a{
  border: 1px solid burlywood;
  transition: 1s;
 }
+
+.deletebutton{
+  color: transparent;
+  display: flex;
+  background: url(background/delete.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 4vh;
+  height: 4vh;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 2px black;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.deletebutton:hover{
+  background-color: cornflowerblue;
+  opacity: 0.5;
+  border: 1px solid cornflowerblue;
+  transition: 1s;
+ }
+
+ #report{
+  color: transparent;
+  display: flex;
+  background: url(background/signaler.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 3vh;
+  height: 3vh;
+  border: none;
+  cursor: pointer;
+}
+
+
 

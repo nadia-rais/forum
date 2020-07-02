@@ -40,9 +40,9 @@ if (isset($_POST["deco"])) {
             </section>
           </section>
   
-      <?php
+       <?php
         }else{
-      ?>
+       ?>
       <section id="banner">
         <section id="principal">
             <h1> le forum de la communauté world of warcraft!</h1>
@@ -73,8 +73,8 @@ if (isset($_POST["deco"])) {
 
             while($value=mysqli_fetch_assoc($query_topic)){
   
-                echo "<div id='topic-text'><p id='date'> Posté le : ".$value['date']."</p>";
-                echo "<h3><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a><h3></div>";
+                echo "<section id='topic-text'><p id='date'> Posté le : ".$value['date']."</p>";
+                echo "<h3><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a><h3></section>";
             }
 
           }
@@ -114,6 +114,5 @@ if (isset($_POST["deco"])) {
     </footer>
 </body>
 </html>
-
 
 

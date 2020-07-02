@@ -1,7 +1,7 @@
 <?php
+ob_start();
 session_start();
-if(isset($_SESSION['login'])){
-
+ if(isset($_SESSION['login'])){
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,6 +18,7 @@ if(isset($_SESSION['login'])){
        <?php include("includes/header.php"); ?>
     </header>
     <main>
+      <section id="page">
 
     <?php 
     
@@ -31,17 +32,14 @@ if(isset($_SESSION['login'])){
       $infos = mysqli_fetch_all($query1);
       
       $iduser= $infos[0][0];
-      var_dump($iduser);
-
-      echo "<table id='table-conv'><thead><th colspan='2' id='thead-txt'>".$_GET['msg_conv']."</th></thead><tbody>";
+      echo "<h1 colspan='3' id='page-title''>".$_GET['msg_conv']."</h1>";
 
       if(mysqli_num_rows($query)==0){
         
-        echo "<tr><td colspan='2' id='thead-text'>Pas de messages dans cette Conversation.</td><tr>";
+        echo "<p>Pas de messages dans cette Conversation.</p>";
       }
 
       while($value=mysqli_fetch_assoc($query)){
-        
 
           $idmessage=$value['id_message'];
           //var_dump($idmessage);
@@ -61,38 +59,44 @@ if(isset($_SESSION['login'])){
               $requestcountlikesbyid = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage  AND id_utilisateur = $iduser AND reaction = 1";
               $query_c = mysqli_query($db, $requestcountlikesbyid);
               $countlikesbyid = mysqli_fetch_all($query_c);
-              var_dump($countlikesbyid);
+              //var_dump($countlikesbyid);
 
             //on compte toutes les  dislikes effectuées par l'utilisateur connecté pour un idmessage
               $requestcountbyid = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1 ";
               $query_d = mysqli_query($db, $requestcountbyid);
               $countdislikesbyid = mysqli_fetch_all($query_d);
-        
-            echo "<tr><td id='left-livre'><img id='minipic2' src=".$value['avatar']." alr='profilpic'<p>".$value['id_message'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a>  le : ".$value['date_msg']."</td>";
-            echo "<td id='right-livre'>".$value['message']. "</td>";
-            echo '<td><div class="thumb"><form action="" method="POST">
-                    <input type="submit" name="like" id="likebutton" value="' . $idmessage . '"/>
-                    <p class="count">'.$countlikes[0][0].' &nbsp; people like this</p>
-                    
-                    </form></div>
-                 
-
-                  <div class="thumb"><form action="" method="POST">
-                    <input type="submit" name="dislike" id="dislikebutton" value="' . $idmessage . '"/>
-                    <p class="count">' .$countdislikes[0][0].' &nbsp; people dislike this</p>
-
-                   <form method="post" action ="">
-                    <input id="button_report" type="submit" value="Signaler" name="reportbutton">
-                    <input type="hidden" name="id" value="'.$value['id'].'"></form>";
-                    </form></div>
-                   </td>';
 
 
-                   if(isset($_POST['reportbutton'])){
+            echo "<section id='message-box'>
+                    <section id='id-box'>
+                      <img id='minipic2' src=".$value['avatar']." alt='profilpic'>
+                      <p id='pseudo'> posté par : &nbsp;<a href='members.php?id=".$value['id']."'>".$value['pseudo']."</a></p>
+                      <p id='date'>le : ".$value['date_msg']."</p>
+                    </section>
+                    <section id='text-box'>
+                      <p>".$value['message']. "</p>
+                    </section>
+                    <section id='like-box'>
+                      <section id='sublike-box'>
+                        <form action='' method='POST'>
+                         <input type='submit' name='like' id='likebutton' value='" . $idmessage . "'/>
+                        </form>
+                        <p class='count'>&nbsp; ".$countlikes[0][0]." &nbsp; people like this</p>
+                        <form action='' method='POST'>
+                          <input type='submit' name='dislike' id='dislikebutton' value='" . $idmessage . "'/>
+                        </form>
+                        <p class='count'>&nbsp; " .$countdislikes[0][0]." &nbsp; people dislike this</p>
+                      </section>
+                      <form id='signaler' method='post' action ='signalement-form.php'>
+                        <input id='button_report' type='submit' value='signaler' name='reportbutton'/>
+                        <input type='hidden' name='id' value='".$value['id']."'/>
+                      </form>
+                    </section>
+                  </section>";
+
+                  if(isset($_POST['reportbutton'])){
 
                     $id=$_POST['id'];
-
-                    $db = mysqli_connect("localhost","root","","forum");
 
                     $_SESSION['messageid']=$id;
                                    
@@ -104,72 +108,67 @@ if(isset($_SESSION['login'])){
 
                 }
 
-
             if (isset($_POST["like"])){
     
-              if ($countlikesbyid[0][0]== "0" && $_POST["like"] == $idmessage && $countdislikesbyid[0][0]== "0"){
+              if ($countlikesbyid[0][0]== "0" && $_POST["like"] == $idmessage){
 
-                if($countlikesbyid[0][0]== "0" && $_POST["like"] == $idmessage && $countdislikesbyid[0][0]== "1"){
+                if($countdislikesbyid[0][0]== "1"){
 
                   $likeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1";
                   $querylikeannul = mysqli_query($db, $likeannul); // permet d'annuler le like si l'utilisateur clique sur dislike 
-    
+                 
                 }
-                
-              $requestlike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', 1)";
-              $querylike = mysqli_query($db, $requestlike);
-    
-              }
+             
+                  $requestlike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', 1)";
+                  $querylike = mysqli_query($db, $requestlike);
 
-              else echo'vous avez deja réagi à ce  post';
+              }
+              header("location:message.php?id_conversation=".$_GET['id_conversation']."&msg_conv=".$_GET['msg_conv']);
               
-            
             }
 
             if (isset($_POST["dislike"])){
     
-              if ($countdislikesbyid[0][0]== "0" && $_POST["dislike"] == $idmessage && $countdislikesbyid[0][0]== "0"){
+              if ($countdislikesbyid[0][0]== "0" && $_POST["dislike"] == $idmessage){
 
-                if($countdislikesbyid[0][0]== "0" && $_POST["dislike"] == $idmessage && $countlikesbyid[0][0]== "1"){
+                if($countlikesbyid[0][0]== "1"){
 
                   $dislikeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = 1";
                   $querydislikeannul = mysqli_query($db, $dislikeannul); // permet d'annuler le dislike si l'utilisateur clique sur like 
-    
+                 
                   }
-  
-              $requestdislike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', -1)";
-              $querydislike = mysqli_query($db, $requestdislike);
-    
+                
+                  $requestdislike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', -1)";
+                  $querydislike = mysqli_query($db, $requestdislike);
+              
               }
 
-              else echo'vous avez deja réagi à ce  post';
-
+              header("location:message.php?id_conversation=".$_GET['id_conversation']."&msg_conv=".$_GET['msg_conv']);
             
             }
 
           }
-       
-        echo "</tbody></table>";
 
-
+        echo "<section id='post-message'>
+                <h1>participer à cette conversation</h1> 
+                <form id='msg_conv'action='' method='POST'>
+                  <input  type='text' size='100' name='msg_conv' required>
+                  <input id='button-valider' type='submit' name='submit_msg' value='envoyer'>
+                </form>";
 
         if(isset($_POST['submit_msg'])){
           $request2="INSERT INTO `messages`(`message`, `id_utilisateur`, `id_conversation`, `date_msg`) VALUES ('".$_POST['msg_conv']."','$_SESSION[id]','".$_GET['id_conversation']."', NOW())";
           $query2=mysqli_query($db,$request2);
-          header("location:message.php?id_conversation=".$_GET['id_conversation']."&msg_conv=".$_GET['msg_conv']);
-      }
 
-        echo "<form id='modification1' method='POST'><h1>Nouveau message</h1><br>
-        <input id='form-text' type='text' name='msg_conv' required>
-        
-        <br><br>
-        
-        <input id='button-valider' type='submit' name='submit_msg' value='Valider'>
-        </form>";
+          header('location:message.php?id_conversation='.$_GET['id_conversation']."&msg_conv=".$_GET['msg_conv']);
+
+
+      }
+      echo '</section>';
 
       
     ?>
-
+      </section>
     </main>
     <footer>
       <?php include("includes/footer.php"); ?>
@@ -180,7 +179,8 @@ if(isset($_SESSION['login'])){
 <?php
  }
 
- else{
- header("location:index.php");
+else{
+  header("location:index.php");
  }
+ ob_end_flush()
 ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-// if(isset($_SESSION['login'])){
+if(isset($_SESSION['login'])){
 
 ?>
 <!DOCTYPE html>
@@ -18,6 +18,7 @@ session_start();
        <?php include("includes/header.php"); ?>
     </header>
     <main>
+        <section id="container-formtopic">
 
     <?php
 
@@ -28,7 +29,7 @@ session_start();
             header("location:conversation.php?id_topic=".$_POST['id_topic_test']."&topic_name=".$_POST['topic_name_test']);
         }
 
-        echo "<form method='POST'><h1>Nouvelle Conversation</h1><br>
+        echo "<form id='modification1' method='POST'><h1>Nouvelle Conversation</h1><br>
         <label for='msg_conv'>Nom de la Conversation</label><br>
         <input id='form-text' type='text' name='msg_conv' required>
         
@@ -42,6 +43,7 @@ session_start();
         
 
     ?>
+        </section>
 
     </main>
     <footer>
@@ -51,9 +53,9 @@ session_start();
 </html>
 
 <?php
-// }
+}
 
-// else{
-//   header("location:index.php");
-// }
+else{
+ header("location:index.php");
+ }
 ?>

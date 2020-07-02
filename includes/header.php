@@ -24,7 +24,6 @@ if (isset($_POST["deco"])) {
           else{
           ?>
           <li><a href="topic.php">TOPICS</a></li>
-          <li><a href="categorie.php">CATEGORIES</a></li>
           <li><a href="profil.php">PROFIL</a></li>
      <?php
           }
@@ -38,9 +37,9 @@ if (isset($_POST["deco"])) {
         }else{
       ?>
       </ul>
-      <div id="log">
+      <section id="log">
         <a class="deco" href="connexion.php"> LOGIN &nbsp;<i class="far fa-user"></i></a></li>
-      </div>
+      </section>
       <?php }?>
   </nav>
 </header>

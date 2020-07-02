@@ -18,6 +18,7 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
        <?php include("includes/header.php"); ?>
     </header>
     <main>
+    <section id="container-formtopic">
 
     <?php
 
@@ -28,24 +29,24 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
             header('location:topic.php');
         }
 
-        echo "<form method='POST'><h1>Nouveau Topic</h1><br>
-        <label for='nom_topic'>Nom du Topic</label><br>
+        echo "<form id='modification1' method='POST'><h1>Nouveau Topic</h1><br>
+        <label for='nom_topic'>nom du Topic</label><br>
         <input id='form-text' type='text' name='nom_topic' required>
         
         <select name='droits_topic' id='select' required>
-            <option value=''>--sélectionner la visibilitée du topic--</option>
-            <option value='1'>Publique</option>
+            <option value=''>--sélectionner la visibilité du topic--</option>
+            <option value='1'>Public</option>
             <option value='2'>Privé</option>
         </select>
         
         <br><br>
         
-        <input id='button-valider' type='submit' name='submit_topic' value='Valider'>
-        </form>";
-
-        
+        <input type='submit' name='submit_topic' value='Valider'>
+        </form>";  
 
     ?>
+
+    </section>
 
     </main>
     <footer>

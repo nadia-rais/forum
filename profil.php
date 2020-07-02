@@ -1,7 +1,5 @@
 <?php
 session_start();
-$connect = mysqli_connect('localhost','root','','forum');
-
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +37,7 @@ $connect = mysqli_connect('localhost','root','','forum');
             <p><strong>Note:</strong> Seuls les formats .jpg, .jpeg, .jpeg, .gif, .png sont autorisés jusqu'à une taille maximale de 5 Mo.</p>
           </form>
 
-          <form id="formmodif"method="POST" action="profil.php">
+          <form id="formmodif" method="POST">
             <div class="modif">
               <label for="login">nouveau pseudo</label><br>
               <input id="login-profil" type="text" value="nouveau pseudo" name="pseudo">
@@ -48,30 +46,38 @@ $connect = mysqli_connect('localhost','root','','forum');
             <div class="modif">
               <label for="login">nouveau login</label><br>
               <input id="login-profil" type="text" value="nouveau login" name="login">
-              <input id="button-modif" type="submit" name="submit2" value="modifier">
+              <input id="button-modif" type="submit" name="submit3" value="modifier">
             </div>
             <div class="modif">
               <label class="labpass" for="password">nouveau password</label><br>
               <input id="login-password" type="password" value="nouveau password" name="password">
               <label class="labpass" for="passwordrepeat">confirmer password</label>
               <input type="password" name="passwordrepeat">
-              <input id="button-modif" type="submit" name="submit2" value="modifier">
+              <input id="button-modif" type="submit" name="submit4" value="modifier">
             </div>
           </form> 
-        </section>
-     
-
+    
         <?php
         if (isset($_SESSION["login"])){
 
-          $request = "SELECT login, pseudo, avatar, DATE_FORMAT (date, '%d/%m/%Y') FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+          $connect = mysqli_connect('localhost','root','','forum');
+
+          $request = "SELECT id, login, pseudo, avatar, DATE_FORMAT (date, '%d/%m/%Y'),id_droits FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
           $query = mysqli_query($connect, $request);
           $infos = mysqli_fetch_all($query);
+          $id = ($infos[0][0]);
+          $statut = ($infos[0][5]);
+
+          $request1 = "SELECT COUNT(*) FROM messages WHERE id_utilisateur = '$id' ";
+          $query1 = mysqli_query($connect, $request1);
+          $count = mysqli_fetch_all($query1);
+
+          $requete = "SELECT login FROM utilisateurs";
+          $querylog = mysqli_query($connect, $requete);
+          $log = mysqli_fetch_all($querylog);
+          var_dump($log);
+          $exist = $log[0][0];
         
-          /*$request3 = "SELECT COUNT(*) FROM message WHERE id_utilisateur = ... ";
-          $query3 = mysqli_query($connect, $request3);
-          $countmessages = mysqli_fetch_all($query3, MYSQLI_ASSOC);*/
-        }
 
          if(isset ($_POST['submit1'])){
 
@@ -80,34 +86,42 @@ $connect = mysqli_connect('localhost','root','','forum');
           $request2 = "UPDATE `utilisateurs` SET `avatar`='$link' WHERE login = '$_SESSION[login]'";
           $result2 = mysqli_query($connect, $request2);
 
-          header("location:profil.php");
         }
 
-         //update pseudo
-         if(isset($_POST['submit2']) && (!empty($_POST['pseudo']))){
+        //update pseudo
+           if(isset($_POST['submit2']) && (!empty($_POST['pseudo']))){
 
-          $pseudo = ($_POST['pseudo']);
-  
-          $request3 = "UPDATE `utilisateurs` SET `pseudo`='$pseudo' WHERE login = '$_SESSION[login]'";
-          $result3 = mysqli_query($connect, $request3);
-  
-          header("location:connexion.php");
-        }
+            $pseudo = ($_POST['pseudo']);
+    
+            $request3 = "UPDATE `utilisateurs` SET `pseudo`='$pseudo' WHERE login = '$_SESSION[login]'";
+            $result3 = mysqli_query($connect, $request3);
 
-        
+            header('location:profil.php');
+          }
+  
         //update login
-        if(isset($_POST['submit2']) && (!empty($_POST['login']))){
+          if(isset($_POST['submit3'])){
+            $login = ($_POST['login']);
 
-          $login = ($_POST['login']);
-  
-          $request4 = "UPDATE `utilisateurs` SET `login`='$login' WHERE login = '$_SESSION[login]'";
-          $result4 = mysqli_query($connect, $request4);
-  
-          header("location:connexion.php");
+            if (!empty($exist)){
+
+              echo "<p class='errormessage'>Ce pseudo est déjà utilisé !</p>";
+
+            } 
+
+            else{
+
+              $request4 = "UPDATE `utilisateurs` SET `login`='$login' WHERE login = '$_SESSION[login]'";
+              $result4 = mysqli_query($connect, $request4);
+
+             
+              echo '<p class="error-connect">votre login a bien été modifié</p>';
+            }
+             
         }
 
         //update password
-        if(isset($_POST['submit2']) && (!empty($_POST['password']))){
+        if(isset($_POST['submit4'])){
 
           $password = ($_POST['password']);
           $password_repeat = ($_POST['passwordrepeat']);
@@ -116,22 +130,28 @@ $connect = mysqli_connect('localhost','root','','forum');
 
               $request5 = "UPDATE `utilisateurs` SET `password`='$password' WHERE login = '$_SESSION[login]'";
               $result5 = mysqli_query($connect, $request5);
+              
+              header('location:profil.php');
+              echo '<p>votre password a bien été modifié</p>';
 
-            header('location:connexion.php'); }
+           }
         
             else echo '<p class="error-connect">Les mots de passe doivent être identiques</p>';
             
         }
 
+      }
+
         ?>
+        </section>
          <div class="profile-card">
           <div class="top-section">
             <i class="notif fas fa-bell"></i>
             <div class="pic">
-              <img src="<?=$infos[0][2]?>" alt="profilpic" width="100">
+              <img src="<?=$infos[0][3]?>" alt="profilpic" width="100">
             </div>
             <div class="name"><?=$_SESSION['login']?></div>
-            <div class="tag"><p>@<?=$infos[0][1]?></p></div>
+            <div class="tag"><p>@<?=$infos[0][2]?></p></div>
           </div>
           <div class="bottom-section">
             <div class="social-media">
@@ -140,11 +160,11 @@ $connect = mysqli_connect('localhost','root','','forum');
               <a href="#"><i class="fab fa-discord"></i></a>
               <a href="#"><i class="fab fa-twitch"></i></a>
             </div>
-            <div>190<span>messages postés</span></div>
+            <div><?=$count[0][0]?><span>messages postés</span></div>
             <div class="border"></div>
-            <div class="views">GOLD<span>niveau</span></div>      
+            <div class="views"><?=$statut?><span>niveau</span></div>      
             <div class="border"></div>
-            <p id="date">inscrit depuis le <?=$infos[0][3]?></p>
+            <p id="date">inscrit depuis le <?=$infos[0][4]?></p>
           </div>
         </div>
         </section>  

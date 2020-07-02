@@ -1,6 +1,6 @@
 <?php
 session_start();
-// if(isset($_SESSION['login'])){
+if(isset($_SESSION['login'])){
 
 ?>
 <!DOCTYPE html>
@@ -18,27 +18,29 @@ session_start();
        <?php include("includes/header.php"); ?>
     </header>
     <main>
-
+    <section id="page">
     <?php
     
       $db = mysqli_connect("localhost","root","","forum");
       $request="SELECT * FROM conversation as C INNER JOIN utilisateurs as U ON C.id_utilisateur=U.id INNER JOIN topic as T ON C.id_topic=T.id_topic WHERE C.id_topic=".$_GET['id_topic']." ORDER BY C.id_conversation";
       $query=mysqli_query($db,$request);
       if(mysqli_num_rows($query)==0){
-        echo "<p>Pas de conversation dans ce Topic.</p><br>";
+        echo "<p id='no-text'>Pas de conversation dans ce Topic.</p><br>";
       }
 
-      echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>".$_GET['topic_name']."</th></thead><tbody>";
+      echo "<h1 id='page-title'>".$_GET['topic_name']."</h1>";
 
       while($value=mysqli_fetch_assoc($query)){
-        
-          echo "<tr><td id='left-livre'><p>".$value['id_conversation'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a>  le : ".$value['date_conversation']."</td>";
-          echo "<td id='right-livre'><a href='message.php?id_conversation=".$value['id_conversation']."&msg_conv=".$value['msg_conv']."'>".$value['msg_conv']."</a></td></tr>";
+    
+          echo "<section id='topic-text1'>
+                  <p id='infos-box'>conversation n°".$value['id_conversation']."
+                  </br> Posté par : <a href='members.php?id=".$value['id']."'>".$value['pseudo']."</a> 
+                  </br>le : ".$value['date_conversation']."</p>
+                  <a id='name-conv' href='message.php?id_conversation=".$value['id_conversation']."&msg_conv=".$value['msg_conv']."'>".$value['msg_conv']."</a>
+                </section>";
       }
 
-        echo "</tbody></table>";
-
-        echo "<form action='ajout_conversation.php' method='POST'>
+        echo "<form id='add-button' action='ajout_conversation.php' method='POST'>
               <input id='button-valider' type='submit' value='Ajouter une Conversation' name='submit'>
               <input type='hidden' name='id_topic' value='".$_GET['id_topic']."'>
               <input type='hidden' name='topic_name' value='".$_GET['topic_name']."'>
@@ -46,7 +48,7 @@ session_start();
 
       
     ?>
-
+    </section>
     </main>
     <footer>
       <?php include("includes/footer.php"); ?>
@@ -55,9 +57,9 @@ session_start();
 </html>
 
 <?php
-// }
+}
 
-// else{
-//   header("location:index.php");
-// }
+ else{
+header("location:index.php");
+}
 ?>

@@ -18,8 +18,9 @@ session_start();
        <?php include("includes/header.php"); ?>
     </header>
     <main>
-
-    <?php
+      <section id="page">
+        <h1 id='page-title'>Les Topics</h1>
+      <?php
     
       $db = mysqli_connect("localhost","root","","forum");
 
@@ -28,44 +29,39 @@ session_start();
         $request="SELECT * FROM topic as T INNER JOIN utilisateurs as U ON T.id_utilisateur=U.id ORDER BY T.id_topic";
         $query=mysqli_query($db,$request);
   
-        echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>Les Topics</th></thead><tbody>";
-  
         while($value=mysqli_fetch_assoc($query)){
   
-            echo "<tr><td id='left-livre'><p>".$value['id_topic'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a>  le : ".$value['date_topic']."</td>";
-            echo "<td id='right-livre'><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a></td></tr>";
+            echo "<section id='topic-text1'>
+           
+                   <p id='infos-box'>topic numéro : ".$value['id_topic']."
+                    </br> Posté par : <a href='members.php?id=".$value['id_utilisateur']."'>".$value['pseudo']."</a>
+                    </br>le : ".$value['date_topic']."
+                    </p>
+                   <a id='name-conv' href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a>
+                  </section>";
         }
   
-        echo "</tbody></table>";
+        echo "<form id='add-button' action='ajout_topic.php' method='POST'>
+                <input type='submit' value='Ajouter un Topic' name='submit'>
+              </form>";
       }
 
       else{
         $request2="SELECT * FROM topic as T INNER JOIN utilisateurs as U ON T.id_utilisateur=U.id WHERE T.droits_topic='1' ORDER BY T.id_topic";
         $query2=mysqli_query($db,$request2);
   
-        echo "<table id='table-livre'><thead><th colspan='2' id='thead-txt'>Les Topics</th></thead><tbody>";
-  
         while($value=mysqli_fetch_assoc($query2)){
   
-            echo "<tr><td id='left-livre'><p>".$value['id_topic'].".</p><p> Posté par :</p><a href='profil.php'>".$value['login']."</a>  le : ".$value['date_topic']."</td>";
-            echo "<td id='right-livre'><a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a></td></tr>";
+            echo "<section id='topic-text1'>
+                    <p>posté le : ".$value['date_topic']."</p>
+                    <a href='conversation.php?id_topic=".$value['id_topic']."&topic_name=".$value['topic_name']."'>".$value['topic_name']."</a>
+                  </section>";
         }
-  
-        echo "</tbody></table>";
+
       }
 
-      
-
-       //if($value['id_droits']==2 || $value['id_droits']==3){
-
-        echo "<form action='ajout_topic.php' method='POST'>
-              <input id='button-valider' type='submit' value='Ajouter un Topic' name='submit'>
-              </form>";
-       // }
-
-      
     ?>
-
+      </section>
     </main>
     <footer>
       <?php include("includes/footer.php"); ?>

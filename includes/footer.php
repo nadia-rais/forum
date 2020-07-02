@@ -2,7 +2,6 @@
   <section id="footerleft">
     <ul>
       <li><a href="index.php">homepage</a></li>
-      <li><a href="categorie.php">categories</a></li>
       <li><a href="topic.php">topics</a></li>
       <?php 
         $connect = mysqli_connect('localhost','root','','forum');
@@ -29,6 +28,7 @@
       <?php
         }else{
       ?>
+      <li><a href="connexion.php">categories</a></li>
       <li><a href="connexion.php">profil</a></li>
       <li><a href="connexion.php">espace admin</a></li>
       <li><a href="connexion.php">se connecter</a></li>
