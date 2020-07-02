@@ -2,6 +2,12 @@
 session_start();
  if(isset($_SESSION['login'])){
 
+  $db = mysqli_connect("localhost","root","","forum");
+
+  $request1 = "SELECT login, pseudo, avatar FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+  $query1 = mysqli_query($db, $request1);
+  $infos = mysqli_fetch_all($query1);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,11 +24,18 @@ session_start();
        <?php include("includes/header.php"); ?>
     </header>
     <main>
+      <section id="infos">
+        <section id="banner-connect">
+          <h1>vous êtes actuellement connecté <?php echo $_SESSION['login']?></h1> 
+        </section>
+        <section id="mini-profile">
+          <img id="minipic" src="<?=$infos[0][2]?>" alt="profilpic" width="100">
+          <p>@ <?=$infos[0][1]?></p>
+        </section>
+      </section>
       <section id="page">
         <h1 id='page-title'>Les Topics</h1>
       <?php
-    
-      $db = mysqli_connect("localhost","root","","forum");
 
       if($_SESSION['id_droits']=='2' || $_SESSION['id_droits']=='3'){
 

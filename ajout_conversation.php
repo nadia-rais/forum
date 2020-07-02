@@ -40,8 +40,6 @@ if(isset($_SESSION['login'])){
         <input type='hidden' name='topic_name_test' value='".$_POST['topic_name']."'>
         </form>";
 
-        
-
     ?>
         </section>
 
@@ -56,6 +54,6 @@ if(isset($_SESSION['login'])){
 }
 
 else{
- header("location:index.php");
+header("location:index.php");
  }
 ?>

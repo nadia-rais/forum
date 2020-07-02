@@ -22,7 +22,7 @@ if (isset($_POST["deco"])) {
     </header>
     <main> 
     <?php 
-        $connect = mysqli_connect('localhost','root','root','forum');
+        $connect = mysqli_connect('localhost','root','','forum');
 
         if (isset($_SESSION["login"])){
 
@@ -96,5 +96,6 @@ if (isset($_POST["deco"])) {
     </footer>
 </body>
 </html>
+
 
 

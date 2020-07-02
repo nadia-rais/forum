@@ -1,6 +1,11 @@
 <?php
 session_start();
 if(isset($_SESSION['login'])){
+$db = mysqli_connect("localhost","root","","forum");
+
+$request1 = "SELECT login, pseudo, avatar FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+$query1 = mysqli_query($db, $request1);
+$infos = mysqli_fetch_all($query1);
 
 ?>
 <!DOCTYPE html>
@@ -18,10 +23,18 @@ if(isset($_SESSION['login'])){
        <?php include("includes/header.php"); ?>
     </header>
     <main>
-    <section id="page">
-    <?php
-    
-      $db = mysqli_connect("localhost","root","","forum");
+      <section id="infos">
+        <section id="banner-connect">
+          <h1>vous êtes actuellement connecté <?php echo $_SESSION['login']?></h1> 
+        </section>
+        <section id="mini-profile">
+          <img id="minipic" src="<?=$infos[0][2]?>" alt="profilpic" width="100">
+          <p>@ <?=$infos[0][1]?></p>
+        </section>
+      </section>
+      <section id="page">
+      <?php
+  
       $request="SELECT * FROM conversation as C INNER JOIN utilisateurs as U ON C.id_utilisateur=U.id INNER JOIN topic as T ON C.id_topic=T.id_topic WHERE C.id_topic=".$_GET['id_topic']." ORDER BY C.id_conversation";
       $query=mysqli_query($db,$request);
       if(mysqli_num_rows($query)==0){
@@ -30,6 +43,22 @@ if(isset($_SESSION['login'])){
 
       echo "<h1 id='page-title'>".$_GET['topic_name']."</h1>";
 
+      if(isset($_POST['reportbutton'])){
+
+        $id=$_POST['id'];
+
+        $db = mysqli_connect("localhost","root","","forum");
+
+        $_SESSION['convid']=$id;
+                       
+
+        $request5="SELECT FROM `conversation` WHERE id = $id";
+        $query5=mysqli_query($db,$request5);
+
+        header("location:signalement-conv.php");
+
+      }
+
       while($value=mysqli_fetch_assoc($query)){
     
           echo "<section id='topic-text1'>
@@ -37,6 +66,11 @@ if(isset($_SESSION['login'])){
                   </br> Posté par : <a href='members.php?id=".$value['id']."'>".$value['pseudo']."</a> 
                   </br>le : ".$value['date_conversation']."</p>
                   <a id='name-conv' href='message.php?id_conversation=".$value['id_conversation']."&msg_conv=".$value['msg_conv']."'>".$value['msg_conv']."</a>
+                  
+                  <form id='signal'method='post' action =''>
+                    <input type='hidden' name='id' value='$value[id_conversation]'>
+                    <input id='report' type='submit' value='Signaler' name='reportbutton'>
+                  </form>
                 </section>";
       }
 
@@ -57,9 +91,9 @@ if(isset($_SESSION['login'])){
 </html>
 
 <?php
-}
+ }
 
- else{
-header("location:index.php");
+else{
+ header("location:index.php");
 }
 ?>

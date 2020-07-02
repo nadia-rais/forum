@@ -399,7 +399,7 @@ footer a:hover{
  display: flex;
  justify-content: space-evenly;
  align-items: center;
- width: 60%;
+ width: 100%;
  background-color: #FEC30A;
  opacity: 0.6;
  padding-top: 15px;
@@ -421,8 +421,6 @@ footer a:hover{
   transition: 1.5s;
  }
 
-
-
 #date{
   display: flex;
   color: #031128;
@@ -435,26 +433,6 @@ footer a:hover{
  text-transform: uppercase;
  font-size: 18px;
  color: goldenrod;
-}
-
-
-#top-comment{
- display: flex;
- flex-direction: column;
- background-color: white;
- width: 25%;
- margin-left: 5%;
-}
-
-#top-comment-title{
- display: flex;
- justify-content: center;
- color: #FEC30A;
- font-size: 16px;
- padding-top: 10px;
- padding-bottom: 10px;
- border: 1px solid goldenrod;
- letter-spacing: 3px;
 }
 
 #sub{
@@ -504,6 +482,13 @@ footer a:hover{
  background-color: #031128;
  justify-content:flex-end;
  align-items: center;
+}
+
+#topic-part{
+  display: flex;
+  background-color:goldenrod;
+  width: 30%;
+  line-height: 20vh;
 }
 
 
@@ -1450,11 +1435,12 @@ footer a:hover{
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/*** ADMIN ***/
+/*** ADMIN - MODERATION ***/
 #container-admin{
  display: flex;
  flex-direction: column;
  width: 100%;
+ min-height: 80vh;
 }
 
 #container-admin h1{
@@ -1664,6 +1650,44 @@ td a{
  display: inline-block;
  box-shadow:0 10px 40px rgba(0,0,0,0.08);
 }
+#onglet{
+  justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  font-family: 'Roboto', sans-serif;
+}
+
+#onglet input[type=submit]{
+   border: 1px solid goldenrod;
+   background: transparent;
+  justify-content: space-between;
+  width:45%; 
+  padding: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  border-radius: 2px;
+  margin-top: 2.5%;
+}
+
+#onglet input[type=submit]:hover{
+  border: 1px solid #031128;
+  background: goldenrod;
+  color: #031128;
+  transition: 1s;
+}
+
+.thead-txt{
+  background-color: #CFF8FC;
+}
+
+.text-info{
+  color: #057CB3;
+  font-family: 'Roboto', sans-serif;
+}
+
+
 
 /*** RESPONSIVE ADMIN***/
 
@@ -1755,7 +1779,7 @@ td a{
 
 #sublike-box{
   display: flex;
-  width: 25%;
+  width: 22%;
   align-items: center;
   justify-content: center;
 }
@@ -2158,11 +2182,11 @@ td a{
 .deletebutton{
   color: transparent;
   display: flex;
-  background: url(background/delete.png);
+  background: url(background/delete1.png);
   background-size: cover;
   background-repeat: no-repeat;
-  width: 4vh;
-  height: 4vh;
+  width: 3vh;
+  height: 3vh;
   border-radius: 50%;
   border: none;
   box-shadow: 2px black;
@@ -2177,14 +2201,21 @@ td a{
   transition: 1s;
  }
 
+ #signal{
+   display: flex;
+   width: 2.5%;
+ }
+
  #report{
   color: transparent;
   display: flex;
+  width: 30%;
   background: url(background/signaler.png);
   background-size: cover;
   background-repeat: no-repeat;
   width: 3vh;
   height: 3vh;
+  padding: 5px;
   border: none;
   cursor: pointer;
 }

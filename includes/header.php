@@ -18,6 +18,7 @@ if (isset($_POST["deco"])) {
           if($_SESSION["login"] == "admin" OR $_SESSION["login"] == "moderateur"){
           ?>
           <li><a href="topic.php">TOPICS</a></li>
+          <li><a href="moderateur.php">MODERATION</a></li>
           <li><a href="admin.php">PANEL BOARD</a></li>
           <?php 
           }

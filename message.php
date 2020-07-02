@@ -34,6 +34,22 @@ session_start();
       $iduser= $infos[0][0];
       echo "<h1 colspan='3' id='page-title''>".$_GET['msg_conv']."</h1>";
 
+      if(isset($_POST['reportbutton'])){
+
+        $id=$_POST['id'];
+
+        $db = mysqli_connect("localhost","root","","forum");
+
+        $_SESSION['messageid']=$id;
+                       
+
+        $request5="SELECT FROM `message` WHERE id = $id";
+        $query5=mysqli_query($db,$request5);
+
+        header("location:signalement-message.php");
+
+    }
+
       if(mysqli_num_rows($query)==0){
         
         echo "<p>Pas de messages dans cette Conversation.</p>";
@@ -87,26 +103,15 @@ session_start();
                         </form>
                         <p class='count'>&nbsp; " .$countdislikes[0][0]." &nbsp; people dislike this</p>
                       </section>
-                      <form method='post' action ='signalement-form.php'>
-                        <input id='report' type='submit' value='signaler' name='reportbutton'/>
-                        <input type='hidden' name='id' value='".$value['id']."'/>
+                     
+                      <form id='signal' method='post' action =''>
+                        <input id='report' type='submit' value='Signaler' name='reportbutton'/>
+                        <input type='hidden' name='id' value='$value[id_message]'/>
                       </form>
+
                     </section>
                   </section>";
 
-                  if(isset($_POST['reportbutton'])){
-
-                    $id=$_POST['id'];
-
-                    $_SESSION['messageid']=$id;
-                                   
-
-                    $request5="SELECT FROM `messages` WHERE id = $id";
-                    $query5=mysqli_query($db,$request5);
-
-                    header("location:signalement-form.php");
-
-                }
 
             if (isset($_POST["like"])){
     
@@ -133,7 +138,7 @@ session_start();
 
                 if($countlikesbyid[0][0]== "1"){
 
-                  $dislikeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = 1";
+                  $dislikeannul = "DELETE FROM liker WHERE id_message = '$idmessage' AND id_utilisateur = '$iduser' AND reaction = 1";
                   $querydislikeannul = mysqli_query($db, $dislikeannul); // permet d'annuler le dislike si l'utilisateur clique sur like 
                  
                   }
