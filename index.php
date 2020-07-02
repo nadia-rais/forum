@@ -22,7 +22,7 @@ if (isset($_POST["deco"])) {
     </header>
     <main> 
     <?php 
-        $connect = mysqli_connect('localhost','root','','forum');
+        $connect = mysqli_connect('localhost','root','root','forum');
 
         if (isset($_SESSION["login"])){
 
@@ -62,8 +62,9 @@ if (isset($_POST["deco"])) {
         <?php
           
           $db = mysqli_connect("localhost","root","","forum");
-          $request_topic="SELECT * FROM topic as T INNER JOIN utilisateurs as U ON T.id_utilisateur=U.id WHERE droits_topic=1 ORDER BY T.id_topic desc LIMIT 4";
+          $request_topic="SELECT * FROM topic as T INNER JOIN utilisateurs as U ON T.id_utilisateur=U.id ORDER BY T.id_topic desc LIMIT 4";
           $query_topic=mysqli_query($db,$request_topic);
+
 
           if(mysqli_num_rows($query_topic)==0){
             echo "<p>Pas de Topic.</p><br>";
@@ -78,28 +79,16 @@ if (isset($_POST["deco"])) {
             }
 
           }
+          
+         if($value['id_droits']==2 || $value['id_droits']==3){
+
+            echo "<form action='ajout_topic.php' method='POST'>
+                  <input id='button-valider' type='submit' value='Ajouter un Topic' name='submit'>
+                  </form>";
+         }
 
           
         ?>
-          <section id="sub-topics">
-
-            <section id="top-comment">
-              <div id="top-comment-title">TOP-COMMENTS</div>
-              <div>
-                <p>boucle pour mettre les top comments avec le plus de like </P>
-                <p>posté le ..... par </P>
-              </div>
-              <div>
-                <p>posté le ..... par </P>
-              </div>
-              <div>
-                <p>posté le ..... par </P>
-              </div>
-            </section>
-
-          <section>
-
-        </section>
       </section> 
     </main>
     <footer>
