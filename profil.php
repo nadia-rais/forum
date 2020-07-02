@@ -62,7 +62,7 @@ session_start();
 
           $connect = mysqli_connect('localhost','root','','forum');
 
-          $request = "SELECT id, login, pseudo, avatar, DATE_FORMAT (date, '%d/%m/%Y'),id_droits FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+          $request = "SELECT id, login, pseudo, avatar, DATE_FORMAT(date, '%d/%m/%Y'), id_droits FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
           $query = mysqli_query($connect, $request);
           $infos = mysqli_fetch_all($query);
           $id = ($infos[0][0]);
@@ -75,7 +75,6 @@ session_start();
           $requete = "SELECT login FROM utilisateurs";
           $querylog = mysqli_query($connect, $requete);
           $log = mysqli_fetch_all($querylog);
-          var_dump($log);
           $exist = $log[0][0];
         
 
