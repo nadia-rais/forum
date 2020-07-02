@@ -24,7 +24,6 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
 
     <?php
 
-      //if(!isset($_POST['submit_mod_conv'], $_POST['submit_mod_msg'], $_POST['submit_mod_auto'])){
       echo "<form id='onglet' method='POST'>
       <input type='submit' name='submit_mod_conv' value='Conversations Signalées'>
       <input type='hidden' name='mod_conv' value='1'>
@@ -35,10 +34,9 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
       <input type='submit' name='submit_mod_news' value='Liste Newsletter'>
       <input type='hidden' name='news' value='3'>
       </form>";
-      //}
 
       if(isset($_POST['submit_mod_conv'])){
-        $db=mysqli_connect("localhost","root","root","forum");
+        $db=mysqli_connect("localhost","root","","forum");
         $request="SELECT * FROM `signalement_conv`as SC INNER JOIN utilisateurs as U ON SC.id_utilisateur=U.id INNER JOIN conversation as C ON SC.id_conv=C.id_conversation ORDER BY id_conv";
         $query=mysqli_query($db,$request);
 
@@ -60,8 +58,8 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
       }
     }
       elseif(isset($_POST['submit_mod_msg'])){
-        $db=mysqli_connect("localhost","root","root","forum");
-        $request2="SELECT * FROM `signalement_message`as SM INNER JOIN utilisateurs as U ON SM.id_utilisateur=U.id INNER JOIN messages as M ON SM.id_message=M.id_message ORDER BY id_message";
+        $db=mysqli_connect("localhost","root","","forum");
+        $request2="SELECT * FROM `signalement_message` as SM INNER JOIN utilisateurs as U ON SM.id_utilisateur=U.id INNER JOIN messages as M ON SM.id_message=M.id_message ORDER BY SM.id_message";
         $query2=mysqli_query($db,$request2);
 
         if(empty($query2)){
@@ -75,7 +73,7 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
   
         while($value2=mysqli_fetch_assoc($query2)){
   
-            echo "<tr><td>Signalé par ".$value['pseudo']."</td><td>Raison ".$value['signalement']."</td><td>Message signalé ".$value['message']."</td>";
+            echo "<tr><td>Signalé par ".$value2['pseudo']."</td><td>Raison ".$value2['signalement']."</td><td>Message signalé ".$value2['message']."</td>";
         }
   
         echo "</tbody></table>";
@@ -83,7 +81,7 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
     }
 
       elseif(isset($_POST['submit_mod_news'])){
-        $db=mysqli_connect("localhost","root","root","forum");
+        $db=mysqli_connect("localhost","root","","forum");
         $request3="SELECT * FROM `newsletter` ORDER BY id";
         $query3=mysqli_query($db,$request3);
 

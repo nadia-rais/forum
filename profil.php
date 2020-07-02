@@ -65,7 +65,6 @@ session_start();
           $request = "SELECT id, login, pseudo, avatar, DATE_FORMAT(date,'%d/%m/%Y'),id_droits FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
           $query = mysqli_query($connect, $request);
           $infos = mysqli_fetch_all($query);
-          var_dump($infos);
           $id = ($infos[0][0]);
           $statut = ($infos[0][5]);
 
@@ -150,7 +149,7 @@ session_start();
               <img src="<?=$infos[0][3]?>" alt="profilpic" width="100">
             </div>
             <div class="name"><?=$_SESSION['login']?></div>
-            <div class="tag"><p>@<?=$infos[0][2];var_dump($infos);?></p></div>
+            <div class="tag"><p>@<?=$infos[0][2];?></p></div>
           </div>
           <div class="bottom-section">
             <div class="social-media">
