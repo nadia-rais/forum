@@ -45,7 +45,7 @@ session_start();
             </div>
             <div class="modif">
               <label for="login">nouveau login</label><br>
-              <input id="login-profil" type="text" value="nouveau login" name="login">
+              <input id="login-profil" type="text" value="login" name="login">
               <input id="button-modif" type="submit" name="submit3" value="modifier">
             </div>
             <div class="modif">
@@ -62,21 +62,16 @@ session_start();
 
           $connect = mysqli_connect('localhost','root','','forum');
 
-          $request = "SELECT id, login, pseudo, avatar, DATE_FORMAT(date, '%d/%m/%Y'), id_droits FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
+          $request = "SELECT id, login, pseudo, avatar, DATE_FORMAT(date,'%d/%m/%Y'),id_droits FROM utilisateurs WHERE login ='".$_SESSION['login']."'";
           $query = mysqli_query($connect, $request);
           $infos = mysqli_fetch_all($query);
+          var_dump($infos);
           $id = ($infos[0][0]);
           $statut = ($infos[0][5]);
 
           $request1 = "SELECT COUNT(*) FROM messages WHERE id_utilisateur = '$id' ";
           $query1 = mysqli_query($connect, $request1);
           $count = mysqli_fetch_all($query1);
-
-          $requete = "SELECT login FROM utilisateurs";
-          $querylog = mysqli_query($connect, $requete);
-          $log = mysqli_fetch_all($querylog);
-          $exist = $log[0][0];
-        
 
          if(isset ($_POST['submit1'])){
 
@@ -99,24 +94,29 @@ session_start();
           }
   
         //update login
-          if(isset($_POST['submit3'])){
-            $login = ($_POST['login']);
+        if(isset($_POST['submit3'])){
 
-            if (!empty($exist)){
+          $login = ($_POST['login']);
 
-              echo "<p class='errormessage'>Ce pseudo est déjà utilisé !</p>";
+          $requete1 = "SELECT login FROM utilisateurs WHERE login = '$login'" ;
+          $req = mysqli_query($connect,$requete1);
+          $exist = mysqli_fetch_all($req);
 
-            } 
+          if (!empty($exist)){
 
-            else{
+            echo "<p class='errormessage'>Ce pseudo est déjà utilisé !</p>";
 
-              $request4 = "UPDATE `utilisateurs` SET `login`='$login' WHERE login = '$_SESSION[login]'";
-              $result4 = mysqli_query($connect, $request4);
+          } 
 
-             
-              echo '<p class="error-connect">votre login a bien été modifié</p>';
-            }
-             
+          else{
+          
+          $request4 = "UPDATE `utilisateurs` SET `login`='$login' WHERE login ='$_SESSION[login]'";
+          $result4 = mysqli_query($connect, $request4);
+
+          $_SESSION['login'] = $login;
+
+          }
+
         }
 
         //update password
@@ -150,7 +150,7 @@ session_start();
               <img src="<?=$infos[0][3]?>" alt="profilpic" width="100">
             </div>
             <div class="name"><?=$_SESSION['login']?></div>
-            <div class="tag"><p>@<?=$infos[0][2]?></p></div>
+            <div class="tag"><p>@<?=$infos[0][2];var_dump($infos);?></p></div>
           </div>
           <div class="bottom-section">
             <div class="social-media">
