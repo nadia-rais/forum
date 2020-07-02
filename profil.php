@@ -74,7 +74,7 @@ session_start();
 
          if(isset ($_POST['submit1'])){
 
-          $link = $_POST['linkimg'];
+          $link = addslashes($_POST['linkimg']);
           
           $request2 = "UPDATE `utilisateurs` SET `avatar`='$link' WHERE login = '$_SESSION[login]'";
           $result2 = mysqli_query($connect, $request2);
@@ -84,7 +84,7 @@ session_start();
         //update pseudo
            if(isset($_POST['submit2']) && (!empty($_POST['pseudo']))){
 
-            $pseudo = ($_POST['pseudo']);
+            $pseudo = addslashes($_POST['pseudo']);
     
             $request3 = "UPDATE `utilisateurs` SET `pseudo`='$pseudo' WHERE login = '$_SESSION[login]'";
             $result3 = mysqli_query($connect, $request3);
@@ -95,7 +95,7 @@ session_start();
         //update login
         if(isset($_POST['submit3'])){
 
-          $login = ($_POST['login']);
+          $login = addslashes($_POST['login']);
 
           $requete1 = "SELECT login FROM utilisateurs WHERE login = '$login'" ;
           $req = mysqli_query($connect,$requete1);
@@ -121,8 +121,8 @@ session_start();
         //update password
         if(isset($_POST['submit4'])){
 
-          $password = ($_POST['password']);
-          $password_repeat = ($_POST['passwordrepeat']);
+          $password = addslashes($_POST['password']);
+          $password_repeat = addslashes($_POST['passwordrepeat']);
 
             if ($password == $password_repeat) {
 

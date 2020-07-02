@@ -73,7 +73,7 @@
       <?php
       
       if(isset($_POST['submitnews'])){
-        $email = $_POST['emailnews'];
+        $email = addslashes($_POST['emailnews']);
       
         $request1 = "SELECT email FROM newsletter" ;
         $req = mysqli_query($connect,$request1);

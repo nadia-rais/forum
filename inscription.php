@@ -52,11 +52,11 @@
 
                         if($_POST['captcha']==$_SESSION['code']){
                     
-                    $login = ($_POST['login']);
-                    $pseudo = ($_POST['pseudo']);
-                    $mail = ($_POST['email']);
-                    $password = ($_POST['password']);
-                    $repeatpassword = ($_POST['passwordrepeat']);
+                    $login = addslashes($_POST['login']);
+                    $pseudo = addslashes($_POST['pseudo']);
+                    $mail = addslashes($_POST['email']);
+                    $password = addslashes($_POST['password']);
+                    $repeatpassword = addslashes($_POST['passwordrepeat']);
 
                     $profiledefault = ("https://i.ibb.co/mG6M0f5/empty-profile-picture.jpg"); //variable pour insérer une photo de profil par défaut à l'inscription
                     $droits = 1;                                                              //variable pour insérer les droits par défaut à l'inscription
@@ -82,10 +82,10 @@
 
                             header('location:connexion.php');
                 
-                            } else echo '<p class="error-connect">Les mots de passe doivent être identiques</p>';
+                            } else echo '<p class="errormessage">Les mots de passe doivent être identiques</p>';
             
-                        } else echo '<p class="error-connect">Veuillez saisir tous les champs</p>';
-                    } else {echo '<p class="error-connect">Code captcha incorrect</p>';
+                        } else echo '<p class="errormessage">Veuillez saisir tous les champs</p>';
+                    } else {echo '<p class="errormessage">Code captcha incorrect</p>';
                     
                     }
                 }
