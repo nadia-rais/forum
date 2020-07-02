@@ -162,7 +162,7 @@ session_start();
                 </form>";
 
         if(isset($_POST['submit_msg'])){
-          $request2="INSERT INTO `messages`(`message`, `id_utilisateur`, `id_conversation`, `date_msg`) VALUES ('".$_POST['msg_conv']."','$_SESSION[id]','".$_GET['id_conversation']."', NOW())";
+          $request2="INSERT INTO `messages`(`message`, `date_msg`, `id_utilisateur`, `id_conversation`) VALUES ('".$_POST['msg_conv']."', NOW(),'$_SESSION[id]','".$_GET['id_conversation']."')";
           $query2=mysqli_query($db,$request2);
 
           header('location:message.php?id_conversation='.$_GET['id_conversation']."&msg_conv=".$_GET['msg_conv']);

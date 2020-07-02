@@ -41,12 +41,16 @@
                 <input type="password" name="password" required>
                 <label>confirmation password</label>
                 <input type="password" name="passwordrepeat" required>
-                <input type="submit" value="s'inscrire" name="submit">
+                <br><br> <input type="text" placeholder="Entrez ici le CAPTCHA pour valider le formulaire" name="captcha"/>
+                <input type="submit" name="submit"/>
+                <img id="captcha-img" src="captcha.php" onclick="this.src='captcha.php?' + Math.random();" alt="captcha" style="cursor:pointer;">
             </section>
 
                 <?php 
 
-                    if (isset($_POST['submit'])) {
+                    if (isset($_POST['captcha'])) {
+
+                        if($_POST['captcha']==$_SESSION['code']){
                     
                     $login = ($_POST['login']);
                     $pseudo = ($_POST['pseudo']);
@@ -81,8 +85,10 @@
                             } else echo '<p class="error-connect">Les mots de passe doivent être identiques</p>';
             
                         } else echo '<p class="error-connect">Veuillez saisir tous les champs</p>';
-                    } 
-          
+                    } else {echo '<p class="error-connect">Code captcha incorrect</p>';
+                    
+                    }
+                }
                 ?>
         </form>
 
