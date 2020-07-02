@@ -46,23 +46,23 @@ session_start();
         
 
              //on compte tous les likes pour les afficher à côté de l'icone like pour chaque message
-              $requestcountlikes = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage' AND reaction = '1' ";
+              $requestcountlikes = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage AND reaction = 1 ";
               $query_a = mysqli_query($db, $requestcountlikes);
               $countlikes = mysqli_fetch_all($query_a);
 
             //on compte tous les dislikes pour les afficher à côté de l'icone dislike pour chaque message
-              $requestcountdislikes = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND reaction = '-1' ";
+              $requestcountdislikes = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage  AND reaction = -1 ";
               $query_b = mysqli_query($db, $requestcountdislikes);
               $countdislikes = mysqli_fetch_all($query_b);
 
             //on compte toutes les  likes effectuées par l'utilisateur connecté pour un idmessage
-              $requestcountlikesbyid = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = '1'";
+              $requestcountlikesbyid = "SELECT COUNT(*) FROM liker WHERE id_message = $idmessage  AND id_utilisateur = $iduser AND reaction = 1";
               $query_c = mysqli_query($db, $requestcountlikesbyid);
               $countlikesbyid = mysqli_fetch_all($query_c);
               //var_dump($countlikesbyid);
 
             //on compte toutes les  dislikes effectuées par l'utilisateur connecté pour un idmessage
-              $requestcountbyid = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = '-1' ";
+              $requestcountbyid = "SELECT COUNT(*) FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1 ";
               $query_d = mysqli_query($db, $requestcountbyid);
               $countdislikesbyid = mysqli_fetch_all($query_d);
 
@@ -87,8 +87,8 @@ session_start();
                         </form>
                         <p class='count'>&nbsp; " .$countdislikes[0][0]." &nbsp; people dislike this</p>
                       </section>
-                      <form id='signaler' method='post' action ='signalement-form.php'>
-                        <input id='button_report' type='submit' value='signaler' name='reportbutton'/>
+                      <form method='post' action ='signalement-form.php'>
+                        <input id='report' type='submit' value='signaler' name='reportbutton'/>
                         <input type='hidden' name='id' value='".$value['id']."'/>
                       </form>
                     </section>
@@ -114,12 +114,12 @@ session_start();
 
                 if($countdislikesbyid[0][0]== "1"){
 
-                  $likeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = '-1'";
+                  $likeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = -1";
                   $querylikeannul = mysqli_query($db, $likeannul); // permet d'annuler le like si l'utilisateur clique sur dislike 
                  
                 }
              
-                  $requestlike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', '1')";
+                  $requestlike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', 1)";
                   $querylike = mysqli_query($db, $requestlike);
 
               }
@@ -133,12 +133,12 @@ session_start();
 
                 if($countlikesbyid[0][0]== "1"){
 
-                  $dislikeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = '1'";
+                  $dislikeannul = "DELETE FROM liker WHERE id_message = '$idmessage'  AND id_utilisateur = '$iduser' AND reaction = 1";
                   $querydislikeannul = mysqli_query($db, $dislikeannul); // permet d'annuler le dislike si l'utilisateur clique sur like 
                  
                   }
                 
-                  $requestdislike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', '-1')";
+                  $requestdislike = "INSERT INTO `liker`(`id_utilisateur`,`id_message`, `reaction`) VALUES ('$iduser','$idmessage', -1)";
                   $querydislike = mysqli_query($db, $requestdislike);
               
               }
@@ -157,7 +157,7 @@ session_start();
                 </form>";
 
         if(isset($_POST['submit_msg'])){
-          $request2="INSERT INTO `messages`(`message`, `id_utilisateur`, `id_conversation`, `date_msg`) VALUES ('".$_POST['msg_conv']."','".$_SESSION[id]."','".$_GET['id_conversation']."', NOW())";
+          $request2="INSERT INTO `messages`(`message`, `id_utilisateur`, `id_conversation`, `date_msg`) VALUES ('".$_POST['msg_conv']."','$_SESSION[id]','".$_GET['id_conversation']."', NOW())";
           $query2=mysqli_query($db,$request2);
 
           header('location:message.php?id_conversation='.$_GET['id_conversation']."&msg_conv=".$_GET['msg_conv']);
