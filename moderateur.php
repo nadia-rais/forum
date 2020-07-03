@@ -55,7 +55,7 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
   
             echo "<tr><td>Signalé par ".$value['pseudo']."</td><td>Raison ".$value['signalement']."</td><td>Conversation signalée ".$value['msg_conv']."</td>";
             echo "<td><form method='POST'>
-            <input id='button_report_conv' type='submit' value='Delete' name='submit_delete_conv'>
+            <input class='deletebutton' type='submit' value='Delete' name='submit_delete_conv'>
             <input type='hidden' name='id_conv' value='".$value['id_conversation']."'></form></td>";
         }
   
@@ -88,7 +88,7 @@ if(isset($_SESSION['login']) && ($_SESSION['id_droits']== 2 || $_SESSION['id_dro
       
             echo "<tr><td>Signalé par ".$value2['pseudo']."</td><td>Raison ".$value2['signalement']."</td><td>Message signalé ".$value2['message']."</td>";
             echo "<td><form method='POST'>
-                                    <input id='button_report' type='submit' value='Delete' name='submit_delete'>
+                                    <input class='deletebutton' type='submit' value='Delete' name='submit_delete'>
                                     <input type='hidden' name='id' value='".$value2['id_message']."'></form></td>";
         }
   
